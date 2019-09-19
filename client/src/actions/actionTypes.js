@@ -1,0 +1,14 @@
+export const LOAD_ROOMS_SUCCESS = 'LOAD_ROOMS_SUCCESS'
+export const ADD_ROOM = 'ADD_ROOM'
+export const UPDATE_ROOM = 'UPDATE_ROOM'
+
+export const LOAD_PLOTS_SUCCESS = 'LOAD_PLOTS_SUCCESS'
+export const ADD_PLOT = 'ADD_PLOT'
+export const UPDATE_PLOT = 'UPDATE_PLOT'
+export const SAVE_PLOT = 'SAVE_PLOT'
+export const DELETE_PLOT = 'DELETE_PLOT'
+
+export const LOAD_STRAINS_SUCCESS = 'LOAD_STRAINS_SUCCESS'
+export const ADD_STRAIN = 'ADD_STRAIN'
+export const UPDATE_STRAIN = 'UPDATE_STRAIN'
+export const SAVE_STRAIN = 'SAVE_STRAIN'

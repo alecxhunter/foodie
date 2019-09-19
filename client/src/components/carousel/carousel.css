@@ -1,0 +1,20 @@
+.carousel {
+    display: flex;
+}
+
+.carousel > div {
+    /* display: inline-block; */
+}
+
+.carouselControl {
+    width: 30px;
+    cursor: pointer;
+}
+
+.carouselContent {
+    flex-grow: 20;
+    display: flex;
+}
+.carouselContent > div {
+    flex-grow: 1;
+}
