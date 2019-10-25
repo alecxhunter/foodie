@@ -1,0 +1,14 @@
+<template>
+  <div class="recipes">
+
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Recipes'
+}
+</script>
+
+<style scoped>
+</style>
