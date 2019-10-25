@@ -1,4 +1,3 @@
-api/node_modules/
-client/node_modules/
-client/static/bundle.js
+.idea/
+node_modules
 *.log
