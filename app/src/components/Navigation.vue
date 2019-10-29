@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="">
     <li>
       <router-link to="/">Home</router-link>
     </li>
@@ -24,7 +24,6 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  background: olive;
 }
 
 li {
@@ -32,12 +31,12 @@ li {
   /* border-bottom: transparent 4px solid; */
 }
 a:hover {
-  color: #800000;
-  border-bottom: #800000 4px solid;
+  color: #DE1B1B;
+  border-bottom: #DE1B1B 4px solid;
 }
 .router-link-exact-active {
-  /* color: #800000; */
-  border-bottom: #800000 4px solid;
+  color: #87AAB9;
+  border-bottom: #87AAB9 4px solid;
 }
 a {
   display: block;
