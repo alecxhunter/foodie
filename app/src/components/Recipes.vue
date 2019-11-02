@@ -2,35 +2,35 @@
   <div class="recipes">
     <h1>Recipes</h1>
     <router-link to="/recipes/add" tag="button" class="btn btn-sm new-recipe-btn">Submit New Recipe</router-link>
-    <div v-for="(recipe,index) in recipes" :key="index" class="row">
+    <div v-if="this.$route.params.id && this.view === 'recipe-details'">
       <div class="col-sm-12 recipe">
-        <h2 class="text-center color-main">{{recipe.name}}</h2>
+        <h2 class="text-center color-main">{{currentRecipe.name}}</h2>
         <div class="row">
           <div class="col-sm">
-            <img alt="Recipe image" :src="recipe.image" />
+            <img alt="Recipe image" :src="currentRecipe.image" />
           </div>
           <div class="col-sm text-center">
-            {{recipe.description}}
+            {{currentRecipe.description}}
           </div>
         </div>
         <div class="row recipe-header">
-          <div class="col my-auto"><span class="font-weight-bold color-secondary">Prep Time</span>: {{recipe.prepTime}}</div>
-          <div class="col my-auto"><span class="font-weight-bold color-secondary">Cook Time</span>: {{recipe.cookTime}}</div>
-          <div class="col my-auto"><span class="font-weight-bold color-secondary">Servings</span>: {{recipe.servings}}</div>
-          <div class="col-sm-4"><h3 class="text-right color-secondary">Ingredients</h3></div>
+          <div class="col my-auto"><span class="font-weight-bold color-main">Prep Time</span>: {{currentRecipe.prepTime}}</div>
+          <div class="col my-auto"><span class="font-weight-bold color-main">Cook Time</span>: {{currentRecipe.cookTime}}</div>
+          <div class="col my-auto"><span class="font-weight-bold color-main">Servings</span>: {{currentRecipe.servings}}</div>
+          <div class="col-sm-4"><h3 class="text-right color-main">Ingredients</h3></div>
         </div>
         <div class="row directions">
           <div class="col-sm-8">
             <h3>Directions</h3>
             <ol>
-              <li v-for="(dir,idx) in recipe.directions" :key="idx">
+              <li v-for="(dir,idx) in currentRecipe.directions" :key="idx">
                 {{dir}}
               </li>
             </ol>
           </div>
           <div class="col-sm-4">
             <div class="row">
-              <div class="col-sm-6 ingredient" v-for="(ingr,idx) in recipe.ingredients" :key="idx">
+              <div class="col-sm-6 ingredient" v-for="(ingr,idx) in currentRecipe.ingredients" :key="idx">
                 {{ingr.amount + (ingr.measurement ? ' ' + ingr.measurement : '')}} {{ingr.name}}
               </div>
             </div>
@@ -39,6 +39,17 @@
                 {{ingr.amount + (ingr.measurement ? ' ' + ingr.measurement : '')}} {{ingr.name}}
               </li>
             </ul> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="this.view === 'all-recipes'" class="row">
+      <div v-for="(recipe,index) in recipes" :key="index" class="col-sm">
+        <div class="recipe-card" @click="viewDetails(recipe)">
+          <img alt="Recipe image" :src="recipe.image" height="300px" width="300px" />
+          <div class="recipe-card-footer">
+            <h5 class="text-center color-main">{{recipe.name}}</h5>
+            <p>{{recipe.shortDescription}}</p>
           </div>
         </div>
       </div>
@@ -56,6 +67,7 @@ export default {
           id: 1,
           name: 'One-Skillet Alfredo Chicken',
           description: 'This is a long description of how to cook chicken in a pan with pasta. It tastes good and is easy to make. Simple as that.',
+          shortDescription: 'This is a short description of how to cook alfredo chicken.',
           image: 'https://via.placeholder.com/800x300?text=Recipe+Image',
           prepTime: '15 min',
           cookTime: '30 min',
@@ -98,6 +110,7 @@ export default {
           id: 2,
           name: 'Hibachi Steak',
           description: 'This is a long description of how to cook a simple japanese dish. More text. More text. Longer and longer.',
+          shortDescription: 'This is a short description of how to cook hibachi steak.',
           image: 'https://via.placeholder.com/800x300?text=Recipe+Image',
           prepTime: '10 min',
           cookTime: '30 min',
@@ -135,8 +148,23 @@ export default {
             'Put a large non-stick pan on medium-high heat and add 2 tsp of olive oil'
           ]
         }
-      ]
+      ],
+      currentRecipe: null,
+      view: 'all-recipes'
     }
+  },
+  methods: {
+    viewDetails (recipe) {
+      this.currentRecipe = recipe
+      this.view = 'recipe-details'
+      this.$router.push({name: 'recipe-details', params: {id: recipe.id}})
+    }
+  },
+  updated () {
+    if (!this.$route.params.id) this.view = 'all-recipes'
+  },
+  mounted () {
+    console.log('Recipes updated')
   }
 }
 </script>
@@ -161,6 +189,13 @@ export default {
 }
 .recipe {
   padding: 50px 0;
-  border-bottom: #87AAB9 4px solid;
+  border-bottom: #87AAB9 3px dotted;
+}
+.recipe-card {
+  border: #c1c1c1 1px solid;
+  width: 300px;
+}
+.recipe-card-footer {
+  padding: 0 8px;
 }
 </style>

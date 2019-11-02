@@ -1,17 +1,18 @@
 body {
-  background: #F9F3C5;
+  /*background: #c5cbe3;*/
+  background: #f1f0eb;
   color: #646F6F;
 }
 .color-main {
-  color: #87AAB9;
+  color: #F13C20;
 }
 .bg-main {
-  background: #87AAB9;
+  background: #F13C20;
 }
 
 .color-secondary {
-  color: #DE1B1B;
+  color: #4056A1;
 }
 .bg-secondary {
-  background: #DE1B1B;
+  background: #4056A1;
 }

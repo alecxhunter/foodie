@@ -9,12 +9,17 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home
     },
     {
       path: '/recipes',
-      name: 'Recipes',
+      name: 'recipes',
+      component: Recipes
+    },
+    {
+      path: '/recipes/:id',
+      name: 'recipe-details',
       component: Recipes
     }
   ]

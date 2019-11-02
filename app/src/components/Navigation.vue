@@ -1,7 +1,7 @@
 <template>
   <ul class="">
     <li>
-      <router-link to="/">Home</router-link>
+      <router-link to="/" exact>Home</router-link>
     </li>
     <li>
       <router-link to="/recipes">Recipes</router-link>
@@ -35,8 +35,12 @@ a:hover {
   border-bottom: #DE1B1B 4px solid;
 }
 .router-link-exact-active {
-  color: #87AAB9;
-  border-bottom: #87AAB9 4px solid;
+  color: #F13C20;
+  border-bottom: #F13C20 4px solid;
+}
+.router-link-active {
+  color: #F13C20;
+  border-bottom: #F13C20 4px solid;
 }
 a {
   display: block;
