@@ -184,7 +184,7 @@ class Recipes extends Component {
             </div> : '';
         return (
             <div className="recipes">
-                <button className="btn btn-sm new-recipe-btn" type="button" onClick={this.handleClickNewRecipeBtn}>Submit New Recipe</button>
+                <button className="btn btn-sm btn-primary new-recipe-btn" type="button" onClick={this.handleClickNewRecipeBtn}>Submit New Recipe</button>
                 {details}
                 <div className="row">
                 {

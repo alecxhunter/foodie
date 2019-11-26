@@ -16,6 +16,7 @@ const Modal = (props) => {
         <div className={classes} onClick={handleBackgroundClick}>
             <div className="modal-div">
                 <header>
+                    <span className="modal-title">{props.title}</span>
                     <button onClick={props.onClose}>Close</button>
                 </header>
                 <section>
