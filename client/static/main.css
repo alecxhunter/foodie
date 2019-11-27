@@ -188,3 +188,24 @@ body {
     margin-left: -10px;
     margin-right: -10px;
 }
+
+/* Search bar */
+.search-bar {
+    position: relative;
+}
+.search-results {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #ddd;
+    position: absolute;
+    width: 100%;
+    bottom: 38px;
+}
+.search-results li {
+    padding: 8px 16px;
+}
+.search-results li:hover {
+    background: #ddd;
+}

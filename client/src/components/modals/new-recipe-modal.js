@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from './modal';
-import classNames from 'classnames'
+import classNames from 'classnames';
+import SearchBar from '../search-bar';
 
 class NewRecipeModal extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class NewRecipeModal extends Component {
                 cookTime: 0,
                 servings: 0,
                 instructions: '',
-                directions: []
+                directions: [],
+                allIngredients: []
             },
             newDirection: '',
             selectedTab: 'info'
@@ -28,6 +30,18 @@ class NewRecipeModal extends Component {
         this.getTabContent = this.getTabContent.bind(this);
         this.handleNewDirectionChange = this.handleNewDirectionChange.bind(this);
         this.handleAddNewDirection = this.handleAddNewDirection.bind(this);
+        this.handleIngredientSearchResult = this.handleIngredientSearchResult.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/ingredients')
+        .then(res => {
+            return res.json();
+        }).then(data => {
+            this.setState({
+                allIngredients: data
+            })
+        })
     }
 
     handleChangeRecipeProp(prop, val) {
@@ -61,6 +75,10 @@ class NewRecipeModal extends Component {
             recipe,
             newDirection: ''
         });
+    }
+
+    handleIngredientSearchResult(ingr) {
+        console.log('Selected ' + ingr);
     }
 
     getTabContent() {
@@ -105,7 +123,6 @@ class NewRecipeModal extends Component {
             case 'directions':
                 return (
                     <div className="recipe-direction-tab">
-                        <label>Directions</label>
                         <ol>
                             {
                                 (this.state.recipe.directions || []).map((dir, idx) =>
@@ -122,6 +139,18 @@ class NewRecipeModal extends Component {
                                 <span className="input-group-text add-recipe-direction" onClick={this.handleAddNewDirection}>Add</span>
                             </div>
                         </div>
+                    </div>
+                )
+            case 'ingredients':
+                return (
+                    <div className="recipe-ingredients-tab">
+                        <SearchBar
+                            data={this.state.allIngredients}
+                            searchProperty="name"
+                            displayProperty="name"
+                            valueProperty="id"
+                            handleResultSelected={this.handleIngredientSearchResult}
+                        />
                     </div>
                 )
         }
