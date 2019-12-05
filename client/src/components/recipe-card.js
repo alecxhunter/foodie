@@ -1,21 +1,85 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
+import clsx from 'clsx';
+import { Card, CardActionArea, CardActions, CardMedia, CardContent, Typography, Grid, IconButton, Collapse } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { red } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import RecipeDetails from './recipe-details';
 
-class RecipeCard extends Component {
-    constructor(props) {
-        super(props);
-    }
+const useStyles = makeStyles(theme => ({
+   card: {
+      maxWidth: 345,
+   },
+   media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+   },
+   expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+         duration: theme.transitions.duration.shortest,
+      }),
+   },
+   expandOpen: {
+      transform: 'rotate(180deg)',
+   },
+   avatar: {
+      backgroundColor: red[500],
+   },
+}));
 
-    render() {
-        return (
-            <div className="recipe-card" onClick={this.props.handleClick}>
-                <img alt="Recipe image" src={this.props.recipe.image} height="300px" width="300px" />
-                <div className="recipe-card-footer">
-                    <h5 className="text-center color-main">{this.props.recipe.name}</h5>
-                    <p>{this.props.recipe.shortDescription}</p>
-                </div>
-            </div>
-        )
-    }
-};
+export default function RecipeCard(props) {
+   const classes = useStyles();
+   const [expanded, setExpanded] = useState(false);
 
-export default RecipeCard;
+   const handleClickExpand = () => {
+      setExpanded(!expanded);
+   }
+
+   return (
+      <Card>
+         <CardActionArea>
+            <CardMedia
+               component="img"
+               alt="Recipe image"
+               height="300px"
+               image={props.recipe.image}
+               title={props.recipe.name}
+            />
+            <CardContent>
+               <Typography gutterBottom variant="h4">{props.recipe.name}</Typography>
+               <Typography component="p">{props.recipe.description}</Typography>
+               <Grid container spacing={4}>
+                  <Grid item xs>
+                     <Typography variant="body1">Prep Time: {props.recipe.prepTime}</Typography>
+                  </Grid>
+                  <Grid item xs>
+                     <Typography variant="body1">Cook Time: {props.recipe.cookTime}</Typography>
+                  </Grid>
+                  <Grid item xs>
+                     <Typography variant="body1">Servings: {props.recipe.servings}</Typography>
+                  </Grid>
+               </Grid>
+            </CardContent>
+         </CardActionArea>
+         <CardActions>
+            <IconButton
+               className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+               })}
+               onClick={handleClickExpand}
+               aria-expanded={expanded}
+               aria-label="show more">
+               
+               <ExpandMoreIcon />
+            </IconButton>
+         </CardActions>
+         <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+               <RecipeDetails recipe={props.recipe} />
+            </CardContent>
+         </Collapse>
+      </Card>
+   )
+}

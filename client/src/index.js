@@ -1,19 +1,22 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import Recipes from "./containers/recipes";
+import { AppBar, Toolbar } from "@material-ui/core";
+import NavBar from "./components/navbar";
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App = () => (
-  <div className="fluid-container">
-      <header className="navigation">
-          <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Recipes</a></li>
-          </ul>
-      </header>
-      <main className="main-content">
+   <Fragment>
+      <CssBaseline />
+      <AppBar color="primary" position="static">
+         <Toolbar>
+            <NavBar />
+         </Toolbar>
+      </AppBar>
+      <main>
           <Recipes />
       </main>
-  </div>
+   </Fragment>
 )
 
 ReactDOM.render(<App />, document.getElementById("app"));

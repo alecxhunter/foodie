@@ -1,191 +1,295 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, Fragment, useReducer } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import Modal from './modal';
-import classNames from 'classnames';
 import SearchBar from '../search-bar';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
+import AddIcon from '@material-ui/icons/Add';
+import { AppBar, Button, List, ListItem, ListItemIcon, IconButton, ListItemText, Tab, Tabs, Box, TextField, Grid, FormHelperText, InputAdornment, Typography, ListItemSecondaryAction } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-class NewRecipeModal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            recipe: {
-                name: '',
-                description: '',
-                shortDescription: '',
-                image: '',
-                prepTime: 0,
-                cookTime: 0,
-                servings: 0,
-                instructions: '',
-                directions: [],
-                allIngredients: []
-            },
-            newDirection: '',
-            selectedTab: 'info'
-        }
+function TabPanel(props) {
+   const { children, value, index, ...other } = props;
 
-        this.handleChangeRecipeProp = this.handleChangeRecipeProp.bind(this);
-        this.handleSaveNewRecipe = this.handleSaveNewRecipe.bind(this);
-        this.handleChangeTab = this.handleChangeTab.bind(this);
-        this.getTabContent = this.getTabContent.bind(this);
-        this.handleNewDirectionChange = this.handleNewDirectionChange.bind(this);
-        this.handleAddNewDirection = this.handleAddNewDirection.bind(this);
-        this.handleIngredientSearchResult = this.handleIngredientSearchResult.bind(this);
-    }
+   return (
+      <Typography
+         component="div"
+         role="tabpanel"
+         hidden={value !== index}
+         id={`simple-tabpanel-${index}`}
+         aria-labelledby={`simple-tab-${index}`}
+         {...other}
+      >
+         {value === index && <Box p={1}>{children}</Box>}
+      </Typography>
+   );
+}
 
-    componentDidMount() {
-        fetch('http://localhost:5000/ingredients')
-        .then(res => {
-            return res.json();
-        }).then(data => {
-            this.setState({
-                allIngredients: data
-            })
-        })
-    }
-
-    handleChangeRecipeProp(prop, val) {
-        let recipe = this.state.recipe;
-        recipe[prop] = val;
-        this.setState({
-            recipe
-        });
-    }
-
-    handleSaveNewRecipe() {
-        this.props.onSave(this.state.recipe);
-    }
-
-    handleChangeTab(tab) {
-        this.setState({
-            selectedTab: tab.toLowerCase()
-        });
-    }
-
-    handleNewDirectionChange(e) {
-        this.setState({
-            newDirection: e.target.value
-        });
-    }
-
-    handleAddNewDirection() {
-        let recipe = this.state.recipe;
-        recipe.directions.push(this.state.newDirection);
-        this.setState({
-            recipe,
-            newDirection: ''
-        });
-    }
-
-    handleIngredientSearchResult(ingr) {
-        console.log('Selected ' + ingr);
-    }
-
-    getTabContent() {
-        switch (this.state.selectedTab.toLowerCase()) {
-            case 'info':
-                return (
-                    <div className="recipe-info-tab">
-                        <label>Recipe Name</label>
-                        <input type="text" id="newrecipe-name" className="form-control" placeholder="Recipe Name" value={this.state.recipe.name} onChange={(e) => this.handleChangeRecipeProp('name', e.target.value)} />
-                        <label>Description</label>
-                        <textarea id="newrecipe-desc" className="form-control" placeholder="Description" value={this.state.recipe.description} onChange={(e) => this.handleChangeRecipeProp('description', e.target.value)}></textarea>
-                        <label>Shortened Description</label>
-                        <input type="text" id="newrecipe-shortdesc" className="form-control" placeholder="Short Description" value={this.state.recipe.shortDescription} onChange={(e) => this.handleChangeRecipeProp('shortDescription', e.target.value)} />
-                        <label>Banner Image</label>
-                        <input type="text" id="newrecipe-image" className="form-control" placeholder="http://example.com/image.jpg" value={this.state.recipe.image} onChange={(e) => this.handleChangeRecipeProp('image', e.target.value)} />
-                        <div className="row">
-                            <div className="col-4">
-                                <label>Prep Time</label>
-                                <div className="input-group">
-                                    <input type="number" id="newrecipe-prep-time" className="form-control" placeholder="Prep Time" aria-label="Prep Time" aria-describedby="basic-addon2" value={this.state.recipe.prepTime} onChange={(e) => this.handleChangeRecipeProp('prepTime', e.target.value)} />
-                                    <div className="input-group-append">
-                                        <span className="input-group-text" id="basic-addon2">minutes</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4">
-                                <label>Cook Time</label>
-                                <div className="input-group">
-                                    <input type="number" id="newrecipe-cook-time" className="form-control" placeholder="Cook Time" aria-label="Cook Time" aria-describedby="basic-addon2" value={this.state.recipe.cookTime} onChange={(e) => this.handleChangeRecipeProp('cookTime', e.target.value)} />
-                                    <div className="input-group-append">
-                                        <span className="input-group-text" id="basic-addon2">minutes</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4">
-                                <label>Servings</label>
-                                <input type="number" id="newrecipe-servings" className="form-control" value={this.state.recipe.servings} onChange={(e) => this.handleChangeRecipeProp('name', e.target.value)} />
-                            </div>
-                        </div>
-                    </div>
-                )
-            case 'directions':
-                return (
-                    <div className="recipe-direction-tab">
-                        <ol>
-                            {
-                                (this.state.recipe.directions || []).map((dir, idx) =>
-                                    <li key={idx}>
-                                        {dir}
-                                    </li>
-                                )
-                            }
-                        </ol>
-                        <hr />
-                        <div className="input-group">
-                            <textarea className="form-control" placeholder="Directions" value={this.state.newDirection} onChange={this.handleNewDirectionChange}></textarea>
-                            <div className="input-group-append">
-                                <span className="input-group-text add-recipe-direction" onClick={this.handleAddNewDirection}>Add</span>
-                            </div>
-                        </div>
-                    </div>
-                )
-            case 'ingredients':
-                return (
-                    <div className="recipe-ingredients-tab">
-                        <SearchBar
-                            data={this.state.allIngredients}
-                            searchProperty="name"
-                            displayProperty="name"
-                            valueProperty="id"
-                            handleResultSelected={this.handleIngredientSearchResult}
-                        />
-                    </div>
-                )
-        }
-    }
-
-    render() {
-        let tabs = ['Info', 'Directions', 'Ingredients'];
-        let self = this;
-        return (
-            <Modal
-                title="Add new recipe"
-                showModal={this.props.showModal}
-                onClose={this.props.onClose}
-                onSave={this.handleSaveNewRecipe} >
-                <div className="new-recipe-modal">
-                    <ul className="nav nav-tabs">
-                    {
-                        tabs.map((tab, idx) => {
-                            let classes = classNames({
-                                'nav-link': true,
-                                'active': self.state.selectedTab.toLowerCase() === tab.toLowerCase()
-                            });
-                            return (
-                                <li key={idx} className="nav-item">
-                                    <a className={classes} href="#" onClick={() => self.handleChangeTab(tab)}>{tab}</a>
-                                </li>
-                            );
-                        })        
-                    }
-                    </ul>
-                    {self.getTabContent()}
-                </div>
-            </Modal>
-        );
-    }
+TabPanel.propTypes = {
+   children: PropTypes.node,
+   index: PropTypes.any.isRequired,
+   value: PropTypes.any.isRequired,
 };
 
-export default NewRecipeModal;
+const useStyles = makeStyles(theme => ({
+   root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+   },
+   margin: {
+      margin: theme.spacing(1),
+   },
+   withoutLabel: {
+      marginTop: theme.spacing(3),
+   },
+   textField: {
+      width: 300,
+   },
+   label: {
+      backgroundColor: 'white'
+   },
+   dirInput: {
+      width: 460
+   }
+}));
+
+export default function NewRecipeModal(props) {
+   const classes = useStyles();
+   const [recipe, setRecipe] = useState({
+      name: '',
+      description: '',
+      shortDescription: '',
+      image: '',
+      prepTime: 0,
+      cookTime: 0,
+      servings: 0,
+      instructions: '',
+      directions: []
+   });
+   const [nextDirection, setNextDirection] = useState('');
+   const [selectedTabIdx, setSelectedTab] = useState(0);
+   const [allIngredients, setAllIngredients] = useState([]);
+
+   useEffect(() => {
+      console.log('loading ingredients');
+      fetch('http://localhost:5000/ingredients')
+         .then(res => {
+            return res.json();
+         }).then(data => {
+            setAllIngredients(data)
+         })
+   }, []);
+
+   const handleChangeRecipeProp = prop => e => {
+      setRecipe({...recipe, [prop]: e.target.value })
+   }
+
+   const handleSaveNewRecipe = () => {
+      props.onSave(recipe);
+   }
+
+   const handleChangeTab = (e, tab) => {
+      setSelectedTab(tab);
+   }
+
+   const handleChangeDirectionText = idx => e => {
+      let directions = [...recipe.directions];
+      directions[idx].text = e.target.value;
+      setRecipe({ ...recipe, directions });
+   }
+
+   const handleChangeNextDirection = e => {
+      setNextDirection(e.target.value);
+   }
+
+   const handleDeleteDirection = idx => {
+      let directions = [...recipe.directions];
+      setRecipe({ ...recipe, directions: directions.filter((d, i) => idx != i)});
+   }
+
+   const handleChangeDirectionEditState = (idx, val) => {
+      let directions = [...recipe.directions];
+      directions[idx].edit = val;
+      setRecipe({ ...recipe, directions });
+   }
+
+   const handleAddNextDirection = () => {
+      let directions = [...recipe.directions, {text: nextDirection, edit: false}];
+      recipe.directions = directions;
+      setRecipe(recipe);
+      setNextDirection('');
+   }
+
+   const handleIngredientSearchResult = ingr => {
+      console.log('Selected ' + ingr);
+   }
+
+   return (
+      <Modal
+         title="Add new recipe"
+         showModal={props.showModal}
+         onClose={props.onClose}
+         onSave={handleSaveNewRecipe} >
+         <AppBar position="static">
+            <Tabs variant="fullWidth" value={selectedTabIdx} onChange={handleChangeTab}>
+               <Tab label="Info" id="new-recipe-tab-0" aria-controls="new-recipe-tabpanel-0" />
+               <Tab label="Directions" id="new-recipe-tab-1" aria-controls="new-recipe-tabpanel-1" />
+               <Tab label="Ingredients" id="new-recipe-tab-2" aria-controls="new-recipe-tabpanel-2" />
+            </Tabs>
+         </AppBar>
+         <TabPanel value={selectedTabIdx} index={0}>
+            <form>
+               <div>
+                  <TextField
+                     key={props.showModal}
+                     label="Recipe Name"
+                     className={clsx(classes.margin, classes.textField)}
+                     variant="outlined"
+                     value={recipe.name}
+                     onChange={handleChangeRecipeProp('name')}
+                  />
+               </div>
+               <div>
+                  <TextField
+                     key={props.showModal}
+                     label="Description"
+                     className={clsx(classes.margin, classes.textField)}
+                     multiline
+                     fullWidth
+                     rows="1"
+                     rowsMax="3"
+                     variant="outlined"
+                     value={recipe.description}
+                     onChange={handleChangeRecipeProp('description')}
+                  />
+               </div>
+               <div>
+                  <TextField
+                     key={props.showModal}
+                     label="Banner Image URL"
+                     className={clsx(classes.margin, classes.textField)}
+                     variant="outlined"
+                     value={recipe.image}
+                     onChange={handleChangeRecipeProp('image')}
+                  />
+               </div>
+               <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                     <TextField
+                        key={props.showModal}
+                        label="Prep Time"
+                        type="number"
+                        variant="outlined"
+                        value={recipe.prepTime}
+                        onChange={handleChangeRecipeProp('prepTime')}
+                     />
+                     <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
+                  </Grid>
+                  <Grid item xs={4}>
+                     <TextField
+                        key={props.showModal}
+                        label="Cook Time"
+                        type="number"
+                        variant="outlined"
+                        value={recipe.cookTime}
+                        onChange={handleChangeRecipeProp('cookTime')}
+                     />
+                     <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
+                  </Grid>
+                  <Grid item xs={4}>
+                     <TextField
+                        key={props.showModal}
+                        label="Servings"
+                        type="number"
+                        variant="outlined"
+                        value={recipe.servings}
+                        onChange={handleChangeRecipeProp('servings')}
+                     />
+                  </Grid>
+               </Grid>
+            </form>
+         </TabPanel>
+         <TabPanel value={selectedTabIdx} index={1}>
+            <div className="recipe-direction-tab">
+               <List>
+                  {(recipe.directions || []).map((dir, idx) => {
+                     return (
+                        <ListItem key={idx}>
+                           {
+                              dir.edit ? 
+                                 <Fragment>
+                                    <TextField
+                                       key={props.showModal}
+                                       label="Edit Direction"
+                                       variant="outlined"
+                                       className={classes.dirInput}
+                                       multiline
+                                       rowsMax={3}
+                                       value={dir.text}
+                                       onChange={handleChangeDirectionText(idx)}
+                                    />
+                                    <ListItemSecondaryAction>
+                                       <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, false)}>
+                                          <DoneIcon />
+                                       </IconButton>
+                                    </ListItemSecondaryAction>
+                                 </Fragment>
+                                 :
+                                 <Fragment>
+                                    <ListItemIcon>
+                                       <IconButton edge="end" onClick={() => handleDeleteDirection(idx)}>
+                                          <DeleteIcon />
+                                       </IconButton>
+                                    </ListItemIcon>
+                                    {<ListItemText primary={<Typography component="p">{dir.text}</Typography>} />}
+                                    <ListItemIcon>
+                                       <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, true)}>
+                                          <EditIcon />
+                                       </IconButton>
+                                    </ListItemIcon>
+                                    {/* <ListItemSecondaryAction>
+                                       <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, true)}>
+                                          <EditIcon />
+                                       </IconButton>
+                                    </ListItemSecondaryAction> */}
+                                 </Fragment>
+                           }
+                        </ListItem>
+                     )
+                  })}
+                  <ListItem>
+                     <TextField
+                        key={props.showModal}
+                        label="Next Direction"
+                        variant="outlined"
+                        className={classes.dirInput}
+                        multiline
+                        rowsMax={3}
+                        value={nextDirection}
+                        onChange={handleChangeNextDirection}
+                     />
+                     <ListItemSecondaryAction>
+                        <IconButton edge="end" onClick={handleAddNextDirection}>
+                           <AddIcon />
+                        </IconButton>
+                     </ListItemSecondaryAction>
+                  </ListItem>
+               </List>
+            </div>
+         </TabPanel>
+         <TabPanel value={selectedTabIdx} index={2}>
+            <div className="recipe-ingredients-tab">
+               <SearchBar
+                  data={allIngredients}
+                  searchProperty="name"
+                  displayProperty="name"
+                  valueProperty="id"
+                  handleResultSelected={handleIngredientSearchResult}
+               />
+            </div>
+         </TabPanel>
+      </Modal>
+   )
+}
