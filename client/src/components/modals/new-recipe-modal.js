@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: 'white'
    },
    dirInput: {
-      width: 460
+      width: '100%'
    }
 }));
 
@@ -230,11 +230,11 @@ export default function NewRecipeModal(props) {
                                        value={dir.text}
                                        onChange={handleChangeDirectionText(idx)}
                                     />
-                                    <ListItemSecondaryAction>
+                                    <ListItemIcon>
                                        <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, false)}>
                                           <DoneIcon />
                                        </IconButton>
-                                    </ListItemSecondaryAction>
+                                    </ListItemIcon>
                                  </Fragment>
                                  :
                                  <Fragment>
@@ -249,11 +249,6 @@ export default function NewRecipeModal(props) {
                                           <EditIcon />
                                        </IconButton>
                                     </ListItemIcon>
-                                    {/* <ListItemSecondaryAction>
-                                       <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, true)}>
-                                          <EditIcon />
-                                       </IconButton>
-                                    </ListItemSecondaryAction> */}
                                  </Fragment>
                            }
                         </ListItem>
@@ -270,11 +265,11 @@ export default function NewRecipeModal(props) {
                         value={nextDirection}
                         onChange={handleChangeNextDirection}
                      />
-                     <ListItemSecondaryAction>
+                     <ListItemIcon>
                         <IconButton edge="end" onClick={handleAddNextDirection}>
                            <AddIcon />
                         </IconButton>
-                     </ListItemSecondaryAction>
+                     </ListItemIcon>
                   </ListItem>
                </List>
             </div>
