@@ -1,13 +1,10 @@
-import React, { useState, useEffect, Fragment, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Modal from './modal';
+import EditableList from '../editable-list';
 import SearchBar from '../search-bar';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import DoneIcon from '@material-ui/icons/Done';
-import AddIcon from '@material-ui/icons/Add';
-import { AppBar, Button, List, ListItem, ListItemIcon, IconButton, ListItemText, Tab, Tabs, Box, TextField, Grid, FormHelperText, InputAdornment, Typography, ListItemSecondaryAction } from '@material-ui/core';
+import { AppBar, Tab, Tabs, Box, TextField, Grid, FormHelperText, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 function TabPanel(props) {
@@ -68,7 +65,6 @@ export default function NewRecipeModal(props) {
       instructions: '',
       directions: []
    });
-   const [nextDirection, setNextDirection] = useState('');
    const [selectedTabIdx, setSelectedTab] = useState(0);
    const [allIngredients, setAllIngredients] = useState([]);
 
@@ -94,14 +90,10 @@ export default function NewRecipeModal(props) {
       setSelectedTab(tab);
    }
 
-   const handleChangeDirectionText = idx => e => {
+   const handleChangeDirection = idx => e => {
       let directions = [...recipe.directions];
-      directions[idx].text = e.target.value;
+      directions[idx] = e.target.value;
       setRecipe({ ...recipe, directions });
-   }
-
-   const handleChangeNextDirection = e => {
-      setNextDirection(e.target.value);
    }
 
    const handleDeleteDirection = idx => {
@@ -109,17 +101,9 @@ export default function NewRecipeModal(props) {
       setRecipe({ ...recipe, directions: directions.filter((d, i) => idx != i)});
    }
 
-   const handleChangeDirectionEditState = (idx, val) => {
-      let directions = [...recipe.directions];
-      directions[idx].edit = val;
+   const handleAddDirection = dir => {
+      let directions = [...recipe.directions, dir];
       setRecipe({ ...recipe, directions });
-   }
-
-   const handleAddNextDirection = () => {
-      let directions = [...recipe.directions, {text: nextDirection, edit: false}];
-      recipe.directions = directions;
-      setRecipe(recipe);
-      setNextDirection('');
    }
 
    const handleIngredientSearchResult = ingr => {
@@ -212,67 +196,12 @@ export default function NewRecipeModal(props) {
             </form>
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
-            <div className="recipe-direction-tab">
-               <List>
-                  {(recipe.directions || []).map((dir, idx) => {
-                     return (
-                        <ListItem key={idx}>
-                           {
-                              dir.edit ? 
-                                 <Fragment>
-                                    <TextField
-                                       key={props.showModal}
-                                       label="Edit Direction"
-                                       variant="outlined"
-                                       className={classes.dirInput}
-                                       multiline
-                                       rowsMax={3}
-                                       value={dir.text}
-                                       onChange={handleChangeDirectionText(idx)}
-                                    />
-                                    <ListItemIcon>
-                                       <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, false)}>
-                                          <DoneIcon />
-                                       </IconButton>
-                                    </ListItemIcon>
-                                 </Fragment>
-                                 :
-                                 <Fragment>
-                                    <ListItemIcon>
-                                       <IconButton edge="end" onClick={() => handleDeleteDirection(idx)}>
-                                          <DeleteIcon />
-                                       </IconButton>
-                                    </ListItemIcon>
-                                    {<ListItemText primary={<Typography component="p">{dir.text}</Typography>} />}
-                                    <ListItemIcon>
-                                       <IconButton edge="end" onClick={() => handleChangeDirectionEditState(idx, true)}>
-                                          <EditIcon />
-                                       </IconButton>
-                                    </ListItemIcon>
-                                 </Fragment>
-                           }
-                        </ListItem>
-                     )
-                  })}
-                  <ListItem>
-                     <TextField
-                        key={props.showModal}
-                        label="Next Direction"
-                        variant="outlined"
-                        className={classes.dirInput}
-                        multiline
-                        rowsMax={3}
-                        value={nextDirection}
-                        onChange={handleChangeNextDirection}
-                     />
-                     <ListItemIcon>
-                        <IconButton edge="end" onClick={handleAddNextDirection}>
-                           <AddIcon />
-                        </IconButton>
-                     </ListItemIcon>
-                  </ListItem>
-               </List>
-            </div>
+            <EditableList
+               values={recipe.directions || []}
+               handleChangeValue={handleChangeDirection}
+               handleAddNewValue={handleAddDirection}
+               handleDeleteValue={handleDeleteDirection}
+            />
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={2}>
             <div className="recipe-ingredients-tab">
