@@ -1,7 +1,11 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
-const RecipeDetails = (props) => {
+const formatIngredient = ingredient => {
+   return `${ingredient.amount} ${ingredient.measurement ? ingredient.measurement : ''} ${ingredient.name}`
+}
+
+export default function RecipeDetails(props) {
    return (
       <div className="recipe-details">
          <Grid container spacing={1}>
@@ -19,10 +23,17 @@ const RecipeDetails = (props) => {
             </Grid>
             <Grid item xs={6}>
                <Typography variant="h5">Ingredients</Typography>
+               <Grid container spacing={1}>
+                  {
+                     props.recipe.ingredients.map((ingr, idx) =>
+                        <Grid item xs={6} key={idx}>
+                           <Typography variant="subtitle1">{formatIngredient(ingr)}</Typography>
+                        </Grid>
+                     )
+                  }
+               </Grid>
             </Grid>
          </Grid>
       </div>
    )
-};
-
-export default RecipeDetails;
+}

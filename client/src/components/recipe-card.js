@@ -50,15 +50,15 @@ export default function RecipeCard(props) {
             <CardContent>
                <Typography gutterBottom variant="h4">{props.recipe.name}</Typography>
                <Typography component="p">{props.recipe.description}</Typography>
-               <Grid container spacing={4}>
-                  <Grid item xs>
+               <Grid container spacing={4} justify="space-between" direction="row">
+                  <Grid item xs={4}>
                      <Typography variant="body1">Prep Time: {props.recipe.prepTime}</Typography>
                   </Grid>
-                  <Grid item xs>
-                     <Typography variant="body1">Cook Time: {props.recipe.cookTime}</Typography>
+                  <Grid item xs={4}>
+                     <Typography variant="body1" align={'center'}>Cook Time: {props.recipe.cookTime}</Typography>
                   </Grid>
-                  <Grid item xs>
-                     <Typography variant="body1">Servings: {props.recipe.servings}</Typography>
+                  <Grid item xs={4}>
+                     <Typography variant="body1" align={'right'}>Servings: {props.recipe.servings}</Typography>
                   </Grid>
                </Grid>
             </CardContent>

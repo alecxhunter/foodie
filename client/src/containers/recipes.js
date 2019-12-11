@@ -109,26 +109,26 @@ export default function Recipes() {
    }
 
    return (
-      <div className="recipes">
-         <Grid container spacing={4}>
-            <Grid item>
-               <Button variant="contained" color="primary" onClick={handleClickNewRecipeBtn}>Submit New Recipe</Button>
-            </Grid>
+      <Grid container spacing={0}>
+         <Grid item xs={12}>
+            <Button variant="contained" color="primary" onClick={handleClickNewRecipeBtn}>Submit New Recipe</Button>
          </Grid>
-         <Grid container spacing={2} justify="center">
-            {
-               recipes.map(recipe => (
-                  <Grid item key={recipe.id}>
-                     <RecipeCard recipe={recipe} />
-                  </Grid>
-               ))
-            }
+         <Grid item xs={12}>
+            <Grid container spacing={4} justify="center">
+               {
+                  recipes.map(recipe => (
+                     <Grid item key={recipe.id} xs={6}>
+                        <RecipeCard recipe={recipe} />
+                     </Grid>
+                  ))
+               }
+            </Grid>
          </Grid>
          <NewRecipeModal
             showModal={showModal}
             onClose={handleCloseNewRecipe}
             onSave={handleSaveNewRecipe}
          />
-      </div>
+      </Grid>
    )
 }
