@@ -49,6 +49,10 @@ const useStyles = makeStyles(theme => ({
    },
    dirInput: {
       width: '100%'
+   },
+   indicator: {
+      background: theme.palette.primary.dark,
+      height: '4px'
    }
 }));
 
@@ -116,7 +120,7 @@ export default function NewRecipeModal(props) {
          onClose={props.onClose}
          onSave={handleSaveNewRecipe} >
          <AppBar position="static">
-            <Tabs variant="fullWidth" value={selectedTabIdx} onChange={handleChangeTab}>
+            <Tabs variant="fullWidth" value={selectedTabIdx} onChange={handleChangeTab} classes={{indicator: classes.indicator}}>
                <Tab label="Info" id="new-recipe-tab-0" aria-controls="new-recipe-tabpanel-0" />
                <Tab label="Directions" id="new-recipe-tab-1" aria-controls="new-recipe-tabpanel-1" />
                <Tab label="Ingredients" id="new-recipe-tab-2" aria-controls="new-recipe-tabpanel-2" />

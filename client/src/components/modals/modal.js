@@ -34,8 +34,8 @@ const useStyles = makeStyles(theme => ({
       '& footer': {
          textAlign: 'center',
          borderTop: '1px solid #ddd',
-         marginTop: theme.spacing(1),
-         marginBottom: theme.spacing(1)
+         paddingTop: theme.spacing(1),
+         paddingBottom: theme.spacing(1)
       }
    },
    title: {
