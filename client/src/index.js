@@ -1,12 +1,13 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import Recipes from "./containers/recipes";
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline } from "@material-ui/core";
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from './theme';
 import NavBar from "./components/navbar";
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App = () => (
-   <Fragment>
+   <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar color="primary" position="static">
          <Toolbar>
@@ -16,7 +17,7 @@ const App = () => (
       <main>
           <Recipes />
       </main>
-   </Fragment>
+   </MuiThemeProvider>
 )
 
 ReactDOM.render(<App />, document.getElementById("app"));
