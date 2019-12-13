@@ -57,13 +57,12 @@ export default function NewRecipeModal(props) {
    const [recipe, setRecipe] = useState({
       name: '',
       description: '',
-      shortDescription: '',
       image: '',
       prepTime: 0,
       cookTime: 0,
       servings: 0,
-      instructions: '',
-      directions: []
+      directions: [],
+      ingredients: []
    });
    const [selectedTabIdx, setSelectedTab] = useState(0);
    const [allIngredients, setAllIngredients] = useState([]);
@@ -124,8 +123,8 @@ export default function NewRecipeModal(props) {
             </Tabs>
          </AppBar>
          <TabPanel value={selectedTabIdx} index={0}>
-            <form>
-               <div>
+            <Grid container spacing={1}>
+               <Grid item xs={12}>
                   <TextField
                      key={props.showModal}
                      label="Recipe Name"
@@ -134,8 +133,8 @@ export default function NewRecipeModal(props) {
                      value={recipe.name}
                      onChange={handleChangeRecipeProp('name')}
                   />
-               </div>
-               <div>
+               </Grid>
+               <Grid item xs={12}>
                   <TextField
                      key={props.showModal}
                      label="Description"
@@ -148,8 +147,8 @@ export default function NewRecipeModal(props) {
                      value={recipe.description}
                      onChange={handleChangeRecipeProp('description')}
                   />
-               </div>
-               <div>
+               </Grid>
+               <Grid item xs={12}>
                   <TextField
                      key={props.showModal}
                      label="Banner Image URL"
@@ -158,42 +157,40 @@ export default function NewRecipeModal(props) {
                      value={recipe.image}
                      onChange={handleChangeRecipeProp('image')}
                   />
-               </div>
-               <Grid container spacing={2}>
-                  <Grid item xs={4}>
-                     <TextField
-                        key={props.showModal}
-                        label="Prep Time"
-                        type="number"
-                        variant="outlined"
-                        value={recipe.prepTime}
-                        onChange={handleChangeRecipeProp('prepTime')}
-                     />
-                     <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
-                  </Grid>
-                  <Grid item xs={4}>
-                     <TextField
-                        key={props.showModal}
-                        label="Cook Time"
-                        type="number"
-                        variant="outlined"
-                        value={recipe.cookTime}
-                        onChange={handleChangeRecipeProp('cookTime')}
-                     />
-                     <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
-                  </Grid>
-                  <Grid item xs={4}>
-                     <TextField
-                        key={props.showModal}
-                        label="Servings"
-                        type="number"
-                        variant="outlined"
-                        value={recipe.servings}
-                        onChange={handleChangeRecipeProp('servings')}
-                     />
-                  </Grid>
                </Grid>
-            </form>
+               <Grid item xs={4}>
+                  <TextField
+                     key={props.showModal}
+                     label="Prep Time"
+                     type="number"
+                     variant="outlined"
+                     value={recipe.prepTime}
+                     onChange={handleChangeRecipeProp('prepTime')}
+                  />
+                  <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
+               </Grid>
+               <Grid item xs={4}>
+                  <TextField
+                     key={props.showModal}
+                     label="Cook Time"
+                     type="number"
+                     variant="outlined"
+                     value={recipe.cookTime}
+                     onChange={handleChangeRecipeProp('cookTime')}
+                  />
+                  <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
+               </Grid>
+               <Grid item xs={4}>
+                  <TextField
+                     key={props.showModal}
+                     label="Servings"
+                     type="number"
+                     variant="outlined"
+                     value={recipe.servings}
+                     onChange={handleChangeRecipeProp('servings')}
+                  />
+               </Grid>
+            </Grid>
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
             <EditableList
@@ -210,6 +207,7 @@ export default function NewRecipeModal(props) {
                   searchProperty="name"
                   displayProperty="name"
                   valueProperty="id"
+                  label="Ingredient"
                   handleResultSelected={handleIngredientSearchResult}
                />
             </div>

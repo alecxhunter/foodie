@@ -1,48 +1,48 @@
 body {
-    /*background: #c5cbe3;*/
-    background: #f1f0eb;
-    color: #646F6F;
+   /*background: #c5cbe3;*/
+   background: #f1f0eb;
+   color: #646F6F;
 }
 .color-main {
-    color: #F13C20;
+   color: #F13C20;
 }
 .bg-main {
-    background: #F13C20;
+   background: #F13C20;
 }
 
 .color-secondary {
-    color: #1C73AC;
+   color: #1C73AC;
 }
 .bg-secondary {
-    background: #1C73AC;
+   background: #1C73AC;
 }
 
 /* Navigation */
 .navigation {
-    background: #F13C20;
-    color: white;
+   background: #F13C20;
+   color: white;
 }
 .navigation ul {
-    text-align: left;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+   text-align: left;
+   list-style-type: none;
+   padding: 0;
+   margin: 0;
 }
 .navigation li {
-    display: inline-block;
+   display: inline-block;
 }
 .navigation a:hover {
-    background: #bf2d17;
-    border-bottom: white 4px solid;
+   background: #bf2d17;
+   border-bottom: white 4px solid;
 }
 .navigation a {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    font-weight: bold;
-    margin: 0;
-    padding: 8px 16px;
-    border-bottom: transparent 4px solid;
+   display: block;
+   text-decoration: none;
+   color: inherit;
+   font-weight: bold;
+   margin: 0;
+   padding: 8px 16px;
+   border-bottom: transparent 4px solid;
 }
 
 /* Recipes */
@@ -104,70 +104,70 @@ body {
    position: relative;
 }
 @media (max-width: 640px) {
-    .modal-div {
-        width: 100%;
-        margin: 0 10px;
-    }
+   .modal-div {
+      width: 100%;
+      margin: 0 10px;
+   }
 }
 .modal-div > header .modal-title {
-    position: absolute;
-    top: 5px;
-    left: 5px;
+   position: absolute;
+   top: 5px;
+   left: 5px;
 }
 .modal-div > header {
-    background: #F13C20;
-    text-align: right;
-    height: 35px;
-    border-bottom: #bf2d17 solid 2px;
-    color: #fff;
-    font-weight: bold;
+   background: #F13C20;
+   text-align: right;
+   height: 35px;
+   border-bottom: #bf2d17 solid 2px;
+   color: #fff;
+   font-weight: bold;
 }
 .modal-div > header button {
-    border: none;
-    background: none;
-    font-size: 10pt;
-    font-weight: bold;
-    padding: 7px;
-    outline: none;
-    color: #fff;
+   border: none;
+   background: none;
+   font-size: 10pt;
+   font-weight: bold;
+   padding: 7px;
+   outline: none;
+   color: #fff;
 }
 .modal-div footer {
-    text-align: center;
-}
-.modal-div footer button {
-    font-size: 12pt;
-    font-weight: bold;
-    padding: 7px 15px;
-    margin: 5px 0;
-    outline: none;
+   text-align: center;
+   margin-bottom: 5px;
 }
 .modal-div section > div > p {
-    margin: 0;
+   margin: 0;
 }
 
 .new-recipe-modal .nav {
-    margin-top: -10px;
-    margin-left: -10px;
-    margin-right: -10px;
+   margin-top: -10px;
+   margin-left: -10px;
+   margin-right: -10px;
 }
 
 /* Search bar */
 .search-bar {
-    position: relative;
+   position: relative;
 }
 .search-results {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    background: #fff;
-    border: 1px solid #ddd;
-    position: absolute;
-    width: 100%;
-    bottom: 38px;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   background: #fff;
+   border: 1px solid #ddd;
+   position: absolute;
+   width: 100%;
+   top: 46px;
+   z-index: 999;
+   max-height: 242px;
+   overflow-y: scroll;
 }
 .search-results li {
-    padding: 8px 16px;
+   padding: 8px 16px;
 }
 .search-results li:hover {
-    background: #ddd;
+   background: #ddd;
+}
+.search-results.hide {
+   display: none;
 }

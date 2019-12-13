@@ -1,63 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { TextField } from '@material-ui/core';
 
-class SearchBar extends Component {
-    state = {
-        query: '',
-        showSearchResults: false
-    }
+function SearchBar(props) {
+   const [query, setQuery] = useState('');
+   const [showSearchResults, setShowSearchResults] = useState(false);
 
-    handleChangeQuery = (e) => {
-        this.setState({
-            query: e.target.value
-        });
-    }
+   const handleChangeQuery = e => {
+      setQuery(e.target.value);
+      setShowSearchResults(e.target.value !== '');
+   }
 
-    getFilteredData = () => {
-        return this.props.data.filter(el => {
-            return el[this.props.searchProperty].toLowerCase().includes(this.state.query.toLowerCase());
-        });
-    }
+   const getFilteredData = () => {
+      return props.data.filter(el => el[props.searchProperty].toLowerCase().includes(query.toLowerCase()));
+   }
 
-    handleClickResult = (obj) => {
-        this.setState({
-            query: obj[this.props.searchProperty],
-            showSearchResults: false
-        });
-        this.props.handleResultSelected(obj);
-    }
+   const handleClickResult = obj => {
+      setQuery(obj[props.searchProperty]);
+      setShowSearchResults(false);
+      props.handleResultSelected(obj);
+   }
 
-    handleClickQueryInput = () => {
-        this.setState({
-            showSearchResults: true
-        });
-    }
+   let searchResultsClasses = classNames({
+      'search-results': true,
+      'hide': !showSearchResults || getFilteredData().length === 0
+   });
 
-    render() {
-        let self = this;
-        let searchResultsClasses = classNames({
-            'search-results': true,
-            'd-none': !this.state.showSearchResults
-        });
-        return (
-            <div className="search-bar">
-                <ul className={searchResultsClasses}>
-                {
-                    this.getFilteredData().map((el, idx) => {
-                        return (
-                            <li key={idx} onClick={() => self.handleClickResult(el)}>
-                                {el[self.props.displayProperty]}
-                            </li>
-                        );
-                    })
-                }
-                </ul>
-                <div className="search-query">
-                    <input className="form-control" type="text" placeholder="Search" value={this.state.query} onChange={this.handleChangeQuery} onClick={this.handleClickQueryInput} />
-                </div>
-            </div>
-        );
-    }
+   return (
+      <div className="search-bar">
+         <ul className={searchResultsClasses}>
+            {
+               getFilteredData().map((el, idx) => {
+                  return (
+                     <li key={idx} onClick={() => handleClickResult(el)}>
+                        {el[props.displayProperty]}
+                     </li>
+                  );
+               })
+            }
+         </ul>
+         <div className="search-query">
+            <TextField label="Search" variant="standard" label={props.label ? props.label : 'Search'} value={query} onChange={handleChangeQuery} />
+         </div>
+      </div>
+   );
+}
+
+SearchBar.propTypes = {
+   data: PropTypes.array.isRequired,
+   displayProperty: PropTypes.string.isRequired,
+   searchProperty: PropTypes.string.isRequired,
+   valueProperty: PropTypes.string.isRequired,
+   handleResultSelected: PropTypes.func.isRequired,
+   label: PropTypes.string
 }
 
 export default SearchBar;

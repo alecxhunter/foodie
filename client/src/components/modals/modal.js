@@ -1,36 +1,37 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Button } from '@material-ui/core';
 
-const Modal = (props) => {
-    const handleBackgroundClick = (e) => {
-        if (e.target === e.currentTarget) props.onClose();
-    };
+const Modal = props => {
+   const handleBackgroundClick = (e) => {
+      if (e.target === e.currentTarget) props.onClose();
+   };
 
-    var classes = classNames({
-        'modal-wrapper': true,
-        'hide': !props.showModal
-    });
+   var classes = classNames({
+      'modal-wrapper': true,
+      'hide': !props.showModal
+   });
 
-    return (
-        <div className={classes} onClick={handleBackgroundClick}>
-            <div className="modal-div">
-                <header>
-                    <span className="modal-title">{props.title}</span>
-                    <button onClick={props.onClose}>Close</button>
-                </header>
-                <section>
-                    {props.children}
-                </section>
-                { props.onSave ? 
-                    <footer>
-                        <button className="btn btn-primary" onClick={props.onSave}>Save</button>
-                    </footer> 
-                    : '' 
-                }
-            </div>
-        </div>
-    );
+   return (
+      <div className={classes} onClick={handleBackgroundClick}>
+         <div className="modal-div">
+            <header>
+               <span className="modal-title">{props.title}</span>
+               <button onClick={props.onClose}>Close</button>
+            </header>
+            <section>
+               {props.children}
+            </section>
+            { props.onSave ? 
+               <footer>
+                  <Button variant="contained" color="primary" onClick={props.onSave}>Save</Button>
+               </footer> 
+               : '' 
+            }
+         </div>
+      </div>
+   );
 };
 
 Modal.propTypes = {

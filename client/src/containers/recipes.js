@@ -109,7 +109,7 @@ export default function Recipes() {
    }
 
    return (
-      <Grid container spacing={0}>
+      <Grid container spacing={1}>
          <Grid item xs={12}>
             <Button variant="contained" color="primary" onClick={handleClickNewRecipeBtn}>Submit New Recipe</Button>
          </Grid>
