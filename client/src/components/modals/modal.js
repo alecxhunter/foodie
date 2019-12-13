@@ -1,24 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { Button } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(theme => ({
+   root: {
+      background: 'rgba(0,0,0,0.6)',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      zIndex: 200
+   },
+   modal: {
+      width: '560px',
+      margin: '0 auto',
+      background: '#eee',
+      position: 'relative',
+      [theme.breakpoints.down('md')]: {
+         width: '100%',
+         margin: '0 8px'
+      },
+      '& > header': {
+         background: theme.palette.primary.dark,
+         color: '#fff',
+         '& button': {
+            color: '#fff'
+         }
+      },
+      '& footer': {
+         textAlign: 'center',
+         borderTop: '1px solid #ddd',
+         marginTop: theme.spacing(1),
+         marginBottom: theme.spacing(1)
+      }
+   },
+   title: {
+      margin: theme.spacing(1)
+   }
+}));
 
 const Modal = props => {
+   const classes = useStyles();
    const handleBackgroundClick = (e) => {
       if (e.target === e.currentTarget) props.onClose();
    };
 
-   var classes = classNames({
-      'modal-wrapper': true,
-      'hide': !props.showModal
-   });
-
    return (
-      <div className={classes} onClick={handleBackgroundClick}>
-         <div className="modal-div">
+      <div className={classes.root}
+         style={{display: `${!props.showModal ? 'none' : 'flex'}`}}
+         onClick={handleBackgroundClick}>
+         <div className={classes.modal}>
             <header>
-               <span className="modal-title">{props.title}</span>
-               <button onClick={props.onClose}>Close</button>
+               <Grid container spacing={0} justify="space-between" alignItems="center">
+                  <Grid item>
+                     <Typography className={classes.title}>{props.title}</Typography>
+                  </Grid>
+                  <Grid item>
+                     <Button onClick={props.onClose}>Close</Button>
+                  </Grid>
+               </Grid>
             </header>
             <section>
                {props.children}
