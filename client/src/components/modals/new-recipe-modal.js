@@ -8,16 +8,12 @@ import { AppBar, Tab, Tabs, Box, TextField, Grid, FormHelperText, Typography } f
 import { makeStyles } from '@material-ui/core/styles';
 
 function TabPanel(props) {
-   const { children, value, index, ...other } = props;
+   const { children, value, index } = props;
 
    return (
       <Typography
          component="div"
-         role="tabpanel"
          hidden={value !== index}
-         id={`simple-tabpanel-${index}`}
-         aria-labelledby={`simple-tab-${index}`}
-         {...other}
       >
          {value === index && <Box p={1}>{children}</Box>}
       </Typography>
@@ -121,9 +117,9 @@ export default function NewRecipeModal(props) {
          onSave={handleSaveNewRecipe} >
          <AppBar position="static">
             <Tabs variant="fullWidth" value={selectedTabIdx} onChange={handleChangeTab} classes={{indicator: classes.indicator}}>
-               <Tab label="Info" id="new-recipe-tab-0" aria-controls="new-recipe-tabpanel-0" />
-               <Tab label="Directions" id="new-recipe-tab-1" aria-controls="new-recipe-tabpanel-1" />
-               <Tab label="Ingredients" id="new-recipe-tab-2" aria-controls="new-recipe-tabpanel-2" />
+               <Tab label="Info" />
+               <Tab label="Directions" />
+               <Tab label="Ingredients" />
             </Tabs>
          </AppBar>
          <TabPanel value={selectedTabIdx} index={0}>
