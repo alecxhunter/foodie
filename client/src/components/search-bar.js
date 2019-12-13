@@ -2,8 +2,36 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(theme => ({
+   root: {
+      position: 'relative'
+   },
+   searchResults: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+      background: '#fff',
+      border: '1px solid #ddd',
+      position: 'absolute',
+      width: '100%',
+      top: '46px',
+      zIndex: '500',
+      maxHeight: '242px',
+      overflowY: 'scroll',
+      '& li': {
+         padding: '8px 16px'
+      },
+      '& li:hover': {
+         background: '#ddd'
+      }
+   }
+}));
 
 function SearchBar(props) {
+   const classes = useStyles();
+
    const [query, setQuery] = useState('');
    const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -22,14 +50,10 @@ function SearchBar(props) {
       props.handleResultSelected(obj);
    }
 
-   let searchResultsClasses = classNames({
-      'search-results': true,
-      'hide': !showSearchResults || getFilteredData().length === 0
-   });
-
    return (
-      <div className="search-bar">
-         <ul className={searchResultsClasses}>
+      <div className={classes.root}>
+         <ul className={classes.searchResults}
+            style={{ display: `${(!showSearchResults || getFilteredData().length === 0) ? 'none' : 'block'}` }}>
             {
                getFilteredData().map((el, idx) => {
                   return (
@@ -40,9 +64,7 @@ function SearchBar(props) {
                })
             }
          </ul>
-         <div className="search-query">
-            <TextField variant="standard" label={props.label ? props.label : 'Search'} value={query} onChange={handleChangeQuery} />
-         </div>
+         <TextField variant="standard" label={props.label ? props.label : 'Search'} value={query} onChange={handleChangeQuery} />
       </div>
    );
 }
