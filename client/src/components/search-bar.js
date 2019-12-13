@@ -41,7 +41,7 @@ function SearchBar(props) {
             }
          </ul>
          <div className="search-query">
-            <TextField label="Search" variant="standard" label={props.label ? props.label : 'Search'} value={query} onChange={handleChangeQuery} />
+            <TextField variant="standard" label={props.label ? props.label : 'Search'} value={query} onChange={handleChangeQuery} />
          </div>
       </div>
    );

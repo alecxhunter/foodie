@@ -201,16 +201,14 @@ export default function NewRecipeModal(props) {
             />
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={2}>
-            <div className="recipe-ingredients-tab">
-               <SearchBar
-                  data={allIngredients}
-                  searchProperty="name"
-                  displayProperty="name"
-                  valueProperty="id"
-                  label="Ingredient"
-                  handleResultSelected={handleIngredientSearchResult}
-               />
-            </div>
+            <SearchBar
+               data={allIngredients}
+               searchProperty="name"
+               displayProperty="name"
+               valueProperty="id"
+               label="Ingredient"
+               handleResultSelected={handleIngredientSearchResult}
+            />
          </TabPanel>
       </Modal>
    )
