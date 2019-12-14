@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
    root: {
       position: 'relative'
+   },
+   hide: {
+      display: 'none'
    },
    searchResults: {
       margin: 0,
@@ -52,8 +55,10 @@ function SearchBar(props) {
 
    return (
       <div className={classes.root}>
-         <ul className={classes.searchResults}
-            style={{ display: `${(!showSearchResults || getFilteredData().length === 0) ? 'none' : 'block'}` }}>
+         <ul className={clsx(classes.searchResults, {
+               [classes.hide]: !showSearchResults || getFilteredData().length === 0
+            })}
+         >
             {
                getFilteredData().map((el, idx) => {
                   return (

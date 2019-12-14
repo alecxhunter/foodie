@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -14,6 +15,9 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       alignItems: 'center',
       zIndex: 200
+   },
+   hide: {
+      display: 'none'
    },
    modal: {
       width: '560px',
@@ -50,8 +54,10 @@ const Modal = props => {
    };
 
    return (
-      <div className={classes.root}
-         style={{display: `${!props.showModal ? 'none' : 'flex'}`}}
+      <div 
+         className={clsx(classes.root, {
+            [classes.hide]: !props.showModal
+         })}
          onClick={handleBackgroundClick}>
          <div className={classes.modal}>
             <header>
