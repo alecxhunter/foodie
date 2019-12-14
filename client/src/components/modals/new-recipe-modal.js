@@ -34,8 +34,14 @@ const useStyles = makeStyles(theme => ({
    margin: {
       margin: theme.spacing(1),
    },
+   marginRight: {
+      marginRight: theme.spacing(1)
+   },
    withoutLabel: {
       marginTop: theme.spacing(3),
+   },
+   fullWidth: {
+      width: '100%'
    },
    textField: {
       width: 300,
@@ -124,41 +130,84 @@ export default function NewRecipeModal(props) {
          </AppBar>
          <TabPanel value={selectedTabIdx} index={0}>
             <Grid container spacing={1}>
-               <Grid item xs={12}>
-                  <TextField
-                     key={props.showModal}
-                     label="Recipe Name"
-                     className={clsx(classes.margin, classes.textField)}
-                     variant="outlined"
-                     value={recipe.name}
-                     onChange={handleChangeRecipeProp('name')}
-                  />
+               <Grid container spacing={2} alignItems="center">
+                  <Grid item xs={9}>
+                     <TextField
+                        key={props.showModal}
+                        label="Recipe Name"
+                        className={clsx(classes.margin, classes.fullWidth)}
+                        variant="outlined"
+                        value={recipe.name}
+                        onChange={handleChangeRecipeProp('name')}
+                     />
+                     <FormHelperText>&nbsp;</FormHelperText>
+                  </Grid>
+                  <Grid item xs={3}>
+                     <TextField
+                        key={props.showModal}
+                        label="Prep Time"
+                        className={classes.marginRight}
+                        type="number"
+                        variant="outlined"
+                        value={recipe.prepTime}
+                        onChange={handleChangeRecipeProp('prepTime')}
+                     />
+                     <FormHelperText>Minutes</FormHelperText>
+                  </Grid>
                </Grid>
-               <Grid item xs={12}>
-                  <TextField
-                     key={props.showModal}
-                     label="Description"
-                     className={clsx(classes.margin, classes.textField)}
-                     multiline
-                     fullWidth
-                     rows="1"
-                     rowsMax="3"
-                     variant="outlined"
-                     value={recipe.description}
-                     onChange={handleChangeRecipeProp('description')}
-                  />
+               <Grid container spacing={2} alignItems="center">
+                  <Grid item xs={9}>
+                     <TextField
+                        key={props.showModal}
+                        label="Description"
+                        className={clsx(classes.margin, classes.fullWidth)}
+                        multiline
+                        fullWidth
+                        rows="1"
+                        rowsMax="3"
+                        variant="outlined"
+                        value={recipe.description}
+                        onChange={handleChangeRecipeProp('description')}
+                     />
+                     <FormHelperText>&nbsp;</FormHelperText>
+                  </Grid>
+                  <Grid item xs={3}>
+                     <TextField
+                        key={props.showModal}
+                        label="Cook Time"
+                        className={classes.marginRight}
+                        type="number"
+                        variant="outlined"
+                        value={recipe.cookTime}
+                        onChange={handleChangeRecipeProp('cookTime')}
+                     />
+                     <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
+                  </Grid>
                </Grid>
-               <Grid item xs={12}>
-                  <TextField
-                     key={props.showModal}
-                     label="Banner Image URL"
-                     className={clsx(classes.margin, classes.textField)}
-                     variant="outlined"
-                     value={recipe.image}
-                     onChange={handleChangeRecipeProp('image')}
-                  />
+               <Grid container spacing={2} alignItems="center">
+                  <Grid item xs={9}>
+                     <TextField
+                        key={props.showModal}
+                        label="Banner Image URL"
+                        className={clsx(classes.margin, classes.fullWidth)}
+                        variant="outlined"
+                        value={recipe.image}
+                        onChange={handleChangeRecipeProp('image')}
+                     />
+                  </Grid>
+                  <Grid item xs={3}>
+                     <TextField
+                        key={props.showModal}
+                        label="Servings"
+                        className={classes.marginRight}
+                        type="number"
+                        variant="outlined"
+                        value={recipe.servings}
+                        onChange={handleChangeRecipeProp('servings')}
+                     />
+                  </Grid>
                </Grid>
-               <Grid item xs={4}>
+               {/* <Grid item xs={4}>
                   <TextField
                      key={props.showModal}
                      label="Prep Time"
@@ -189,7 +238,7 @@ export default function NewRecipeModal(props) {
                      value={recipe.servings}
                      onChange={handleChangeRecipeProp('servings')}
                   />
-               </Grid>
+               </Grid> */}
             </Grid>
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
