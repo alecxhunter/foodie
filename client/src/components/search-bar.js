@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { TextField } from '@material-ui/core';
@@ -54,7 +54,7 @@ function SearchBar(props) {
    }
 
    return (
-      <div className={classes.root}>
+      <div className={clsx(props.className, classes.root)}>
          <ul className={clsx(classes.searchResults, {
                [classes.hide]: !showSearchResults || getFilteredData().length === 0
             })}

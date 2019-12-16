@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Modal from './modal';
-import EditableList from '../editable-list';
-import SearchBar from '../search-bar';
+import Modal from '../modal';
+import EditableList from '../../editable-list';
 import { AppBar, Tab, Tabs, Box, TextField, Grid, FormHelperText, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import IngredientsTab from './ingredients-tab';
 
 function TabPanel(props) {
    const { children, value, index } = props;
@@ -49,12 +49,9 @@ const useStyles = makeStyles(theme => ({
    label: {
       backgroundColor: 'white'
    },
-   dirInput: {
-      width: '100%'
-   },
    indicator: {
       background: theme.palette.primary.dark,
-      height: '4px'
+      height: 4
    }
 }));
 
@@ -71,20 +68,9 @@ export default function NewRecipeModal(props) {
       ingredients: []
    });
    const [selectedTabIdx, setSelectedTab] = useState(0);
-   const [allIngredients, setAllIngredients] = useState([]);
-
-   useEffect(() => {
-      console.log('loading ingredients');
-      fetch('http://localhost:5000/ingredients')
-         .then(res => {
-            return res.json();
-         }).then(data => {
-            setAllIngredients(data)
-         })
-   }, []);
 
    const handleChangeRecipeProp = prop => e => {
-      setRecipe({...recipe, [prop]: e.target.value })
+      setRecipe({ ...recipe, [prop]: e.target.value });
    }
 
    const handleSaveNewRecipe = () => {
@@ -109,10 +95,6 @@ export default function NewRecipeModal(props) {
    const handleAddDirection = dir => {
       let directions = [...recipe.directions, dir];
       setRecipe({ ...recipe, directions });
-   }
-
-   const handleIngredientSearchResult = ingr => {
-      console.log('Selected ' + ingr);
    }
 
    return (
@@ -207,38 +189,6 @@ export default function NewRecipeModal(props) {
                      />
                   </Grid>
                </Grid>
-               {/* <Grid item xs={4}>
-                  <TextField
-                     key={props.showModal}
-                     label="Prep Time"
-                     type="number"
-                     variant="outlined"
-                     value={recipe.prepTime}
-                     onChange={handleChangeRecipeProp('prepTime')}
-                  />
-                  <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
-               </Grid>
-               <Grid item xs={4}>
-                  <TextField
-                     key={props.showModal}
-                     label="Cook Time"
-                     type="number"
-                     variant="outlined"
-                     value={recipe.cookTime}
-                     onChange={handleChangeRecipeProp('cookTime')}
-                  />
-                  <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
-               </Grid>
-               <Grid item xs={4}>
-                  <TextField
-                     key={props.showModal}
-                     label="Servings"
-                     type="number"
-                     variant="outlined"
-                     value={recipe.servings}
-                     onChange={handleChangeRecipeProp('servings')}
-                  />
-               </Grid> */}
             </Grid>
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
@@ -250,14 +200,7 @@ export default function NewRecipeModal(props) {
             />
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={2}>
-            <SearchBar
-               data={allIngredients}
-               searchProperty="name"
-               displayProperty="name"
-               valueProperty="id"
-               label="Ingredient"
-               handleResultSelected={handleIngredientSearchResult}
-            />
+            <IngredientsTab ingredients={recipe.ingredients} />
          </TabPanel>
       </Modal>
    )

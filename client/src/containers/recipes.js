@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RecipeCard from '../components/recipe-card';
-import NewRecipeModal from '../components/modals/new-recipe-modal';
+import NewRecipeModal from '../components/modals/new-recipe-modal/new-recipe-modal';
 import { Grid, Button } from '@material-ui/core';
 
 export default function Recipes() {
