@@ -97,6 +97,17 @@ export default function NewRecipeModal(props) {
       setRecipe({ ...recipe, directions });
    }
 
+   const handleAddIngredient = ingr => {
+      let ingredients = [...recipe.ingredients, ingr]
+      setRecipe({ ...recipe, ingredients });
+   }
+
+   const handleChangeIngredient = idx => e => {
+      let ingredients = [...recipe.ingredients];
+      ingredients[idx] = e.target.value;
+      setRecipe({ ...recipe, ingredients });
+   }
+
    return (
       <Modal
          title="Add new recipe"
@@ -200,7 +211,11 @@ export default function NewRecipeModal(props) {
             />
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={2}>
-            <IngredientsTab ingredients={recipe.ingredients} />
+            <IngredientsTab
+               ingredients={recipe.ingredients}
+               handleAddIngredient={handleAddIngredient}
+               handleChangeIngredient={handleChangeIngredient}
+            />
          </TabPanel>
       </Modal>
    )

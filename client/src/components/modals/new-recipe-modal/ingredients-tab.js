@@ -48,9 +48,13 @@ function IngredientsTab(props) {
       setNextIngredient({ ...nextIngredient, [prop]: e.target.value });
    }
 
-   const handleAddIngredient = () => {
-      let ingredients = [...recipe.ingredients, nextIngredient]
-      setRecipe({ ...recipe, ingredients });
+   const addIngredient = () => {
+      props.handleAddIngredient(nextIngredient);
+      setNextIngredient({
+         name: '',
+         measurement: '',
+         amount: 0
+      });
    }
 
    return (
@@ -90,7 +94,7 @@ function IngredientsTab(props) {
                className={classes.margin}
             />
             <ListItemIcon>
-               <IconButton edge="end" onClick={handleAddIngredient}>
+               <IconButton edge="end" onClick={addIngredient}>
                   <AddIcon />
                </IconButton>
             </ListItemIcon>
@@ -100,7 +104,9 @@ function IngredientsTab(props) {
 }
 
 IngredientsTab.propTypes = {
-   ingredients: PropTypes.array.isRequired
+   ingredients: PropTypes.array.isRequired,
+   handleAddIngredient: PropTypes.func.isRequired,
+   handleChangeIngredient: PropTypes.func.isRequired
 }
 
 export default IngredientsTab;
