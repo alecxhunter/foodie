@@ -6,14 +6,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-   input: {
-      width: '100%'
-   }
-}));
-
 export default function EditableList(props) {
-   const classes = useStyles();
    const [editStates, setEditStates] = useState(Array(props.values.length).fill(false));
    const [newValue, setNewValue] = useState('');
 
@@ -50,7 +43,7 @@ export default function EditableList(props) {
                            <TextField
                               label="Edit"
                               variant="outlined"
-                              className={classes.input}
+                              fullWidth
                               multiline
                               rowsMax={3}
                               value={value}
@@ -84,7 +77,7 @@ export default function EditableList(props) {
             <TextField
                label="Next Direction"
                variant="outlined"
-               className={classes.input}
+               fullWidth
                multiline
                rowsMax={3}
                value={newValue}

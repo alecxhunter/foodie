@@ -37,18 +37,6 @@ const useStyles = makeStyles(theme => ({
    marginRight: {
       marginRight: theme.spacing(1)
    },
-   withoutLabel: {
-      marginTop: theme.spacing(3),
-   },
-   fullWidth: {
-      width: '100%'
-   },
-   textField: {
-      width: 300,
-   },
-   label: {
-      backgroundColor: 'white'
-   },
    indicator: {
       background: theme.palette.primary.dark,
       height: 4
@@ -128,7 +116,8 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Recipe Name"
-                        className={clsx(classes.margin, classes.fullWidth)}
+                        className={classes.margin}
+                        fullWidth
                         variant="outlined"
                         value={recipe.name}
                         onChange={handleChangeRecipeProp('name')}
@@ -153,7 +142,7 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Description"
-                        className={clsx(classes.margin, classes.fullWidth)}
+                        className={classes.margin}
                         multiline
                         fullWidth
                         rows="1"
@@ -182,7 +171,8 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Banner Image URL"
-                        className={clsx(classes.margin, classes.fullWidth)}
+                        className={classes.margin}
+                        fullWidth
                         variant="outlined"
                         value={recipe.image}
                         onChange={handleChangeRecipeProp('image')}
