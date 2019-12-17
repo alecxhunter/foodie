@@ -35,22 +35,20 @@ const useStyles = makeStyles(theme => ({
 function SearchBar(props) {
    const classes = useStyles();
 
-   const [query, setQuery] = useState('');
    const [showSearchResults, setShowSearchResults] = useState(false);
 
    const handleChangeQuery = e => {
-      setQuery(e.target.value);
+      props.onChange(e);
       setShowSearchResults(e.target.value !== '');
    }
 
    const getFilteredData = () => {
-      return props.data.filter(el => el[props.searchProperty].toLowerCase().includes(query.toLowerCase()));
+      return props.data.filter(el => el[props.searchProperty].toLowerCase().includes(props.value.toLowerCase()));
    }
 
    const handleClickResult = obj => {
-      setQuery(obj[props.searchProperty]);
+      props.onChange({ target: { value: obj[props.searchProperty] }});
       setShowSearchResults(false);
-      props.handleResultSelected(obj);
    }
 
    return (
@@ -69,17 +67,18 @@ function SearchBar(props) {
                })
             }
          </ul>
-         <TextField variant="standard" label={props.label ? props.label : 'Search'} value={query} onChange={handleChangeQuery} />
+         <TextField variant="standard" label={props.label ? props.label : 'Search'} value={props.value} onChange={handleChangeQuery} />
       </div>
    );
 }
 
 SearchBar.propTypes = {
    data: PropTypes.array.isRequired,
+   value: PropTypes.string.isRequired,
+   onChange: PropTypes.func.isRequired,
    displayProperty: PropTypes.string.isRequired,
    searchProperty: PropTypes.string.isRequired,
    valueProperty: PropTypes.string.isRequired,
-   handleResultSelected: PropTypes.func.isRequired,
    label: PropTypes.string
 }
 

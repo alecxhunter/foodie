@@ -90,10 +90,15 @@ export default function NewRecipeModal(props) {
       setRecipe({ ...recipe, ingredients });
    }
 
-   const handleChangeIngredient = idx => e => {
+   const handleChangeIngredient = (idx, val) => {
       let ingredients = [...recipe.ingredients];
-      ingredients[idx] = e.target.value;
+      ingredients[idx] = val;
       setRecipe({ ...recipe, ingredients });
+   }
+
+   const handleDeleteIngredient = idx => {
+      let ingredients = [...recipe.ingredients];
+      setRecipe({ ...recipe, ingredients: ingredients.filter((ingr, i) => idx != i) });
    }
 
    return (
@@ -205,6 +210,7 @@ export default function NewRecipeModal(props) {
                ingredients={recipe.ingredients}
                handleAddIngredient={handleAddIngredient}
                handleChangeIngredient={handleChangeIngredient}
+               handleDeleteIngredient={handleDeleteIngredient}
             />
          </TabPanel>
       </Modal>

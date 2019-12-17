@@ -4,7 +4,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import AddIcon from '@material-ui/icons/Add';
-import { makeStyles } from '@material-ui/core/styles';
 
 export default function EditableList(props) {
    const [editStates, setEditStates] = useState(Array(props.values.length).fill(false));
