@@ -45,6 +45,7 @@ function IngredientsTab(props) {
    }, []);
 
    const handleChangeNextIngredientProp = prop => e => {
+      // If updating the name property, set the default measurement property as well
       if (prop === 'name' && allIngredients.find(i => i.name === e.target.value)) {
          let ingr = allIngredients.find(i => i.name === e.target.value);
          setNextIngredient({ ...nextIngredient, [prop]: e.target.value, measurement: ingr.default_measurement ? ingr.default_measurement : '' });
@@ -62,6 +63,7 @@ function IngredientsTab(props) {
    const changeIngredientProp = (idx, prop) => e => {
       let ingr = props.ingredients[idx];
       ingr[prop] = e.target.value;
+      // If updating the name property, set the default measurement property as well
       if (prop === 'name' && allIngredients.find(i => i.name === e.target.value)) {
          let tmp = allIngredients.find(i => i.name === e.target.value);
          ingr.measurement = tmp.default_measurement ? tmp.default_measurement : '';
