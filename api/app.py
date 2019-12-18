@@ -35,5 +35,7 @@ def ingredient_measurements_api():
 def recipes_api():
    if request.method == 'GET':
       return jsonify(recipes.all())
+   elif request.method == 'POST':
+      return recipes.create(request.get_json())
 
 app.run()

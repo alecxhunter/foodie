@@ -23,6 +23,7 @@ function IngredientsTab(props) {
    const [allIngredients, setAllIngredients] = useState([]);
    const [allIngredientMeasurements, setAllIngredientMeasurements] = useState([]);
    const [nextIngredient, setNextIngredient] = useState({
+      id: 0,
       name: '',
       measurement: '',
       amount: 0
@@ -45,10 +46,16 @@ function IngredientsTab(props) {
    }, []);
 
    const handleChangeNextIngredientProp = prop => e => {
-      // If updating the name property, set the default measurement property as well
+      // If updating the name property and the name of the ingredient exists in allIngredients
+      // then set the default measurement property as well as the id
       if (prop === 'name' && allIngredients.find(i => i.name === e.target.value)) {
          let ingr = allIngredients.find(i => i.name === e.target.value);
-         setNextIngredient({ ...nextIngredient, [prop]: e.target.value, measurement: ingr.default_measurement ? ingr.default_measurement : '' });
+         setNextIngredient({
+            ...nextIngredient,
+            [prop]: e.target.value,
+            id: ingr.id,
+            measurement: ingr.default_measurement ? ingr.default_measurement : ''
+         });
       } else {
          setNextIngredient({ ...nextIngredient, [prop]: e.target.value });
       }
@@ -63,9 +70,11 @@ function IngredientsTab(props) {
    const changeIngredientProp = (idx, prop) => e => {
       let ingr = props.ingredients[idx];
       ingr[prop] = e.target.value;
-      // If updating the name property, set the default measurement property as well
+      // If updating the name property and the name of the ingredient exists in allIngredients
+      // then set the default measurement property as well as the id
       if (prop === 'name' && allIngredients.find(i => i.name === e.target.value)) {
          let tmp = allIngredients.find(i => i.name === e.target.value);
+         ingr.id = tmp.id;
          ingr.measurement = tmp.default_measurement ? tmp.default_measurement : '';
       }
       props.handleChangeIngredient(idx, ingr);      

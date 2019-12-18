@@ -14,4 +14,10 @@ class Database:
    def execute(self, query, data=None):
       self.cursor.execute(query, data)
 
+   def lastrowid(self):
+      return self.cursor.lastrowid
+
+   def commit(self):
+      self.connection.commit()
+
 database = Database()

@@ -97,9 +97,22 @@ export default function Recipes() {
       setShowModal(false);
    }
 
-   const handleSaveNewRecipe = (recipe) => {
+   const handleSaveNewRecipe = recipe => {
       console.log('Recipes.handleSaveNewRecipe');
       console.log(JSON.stringify(recipe));
+
+      fetch('http://localhost:5000/recipes', {
+         headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+         },
+         method: 'POST',
+         body: JSON.stringify(recipe)
+      }).then(res => {
+         return res.json();
+      }).then(data => {
+         console.log('Recipes POST response: ', data);
+      });
         
       setShowModal(false);
    }
