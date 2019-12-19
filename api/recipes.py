@@ -4,6 +4,7 @@ from flask import jsonify
 def create(data):
    name = data['name']
    desc = data['description']
+   image_url = data['image']
    prep_time = data['prepTime']
    cook_time = data['cookTime']
    servings = data['servings']
@@ -12,10 +13,10 @@ def create(data):
    ingredients = data['ingredients']
 
    insert_stmt = (
-      "INSERT INTO recipes (name, description, prep_time, cook_time, servings, created_by) "
-      "VALUES (%s, %s, %s, %s, %s, %s)"
+      "INSERT INTO recipes (name, description, image_url, prep_time, cook_time, servings, created_by) "
+      "VALUES (%s, %s, %s, %s, %s, %s, %s)"
    )
-   data = (name, desc, prep_time, cook_time, servings, created_by)
+   data = (name, desc, image_url, prep_time, cook_time, servings, created_by)
    database.execute(insert_stmt, data)
    recipe_id = database.lastrowid()
 
@@ -46,6 +47,51 @@ def create(data):
 
    return response
 
-
 def all():
-   return database.execute("SELECT * FROM recipes")
+   query = (
+      "SELECT r.id, "
+      "r.name, "
+      "r.description, "
+      "r.image_url, "
+      "r.prep_time, "
+      "r.cook_time, "
+      "r.servings, "
+      "r.created_by, "
+      "GROUP_CONCAT(DISTINCT rd.text order by rd.`order` separator '**') as directions, "
+      "GROUP_CONCAT(DISTINCT ri.ingredient_id, ';;', i.name, ';;', ri.measurement, ';;', ri.amount separator '**') as ingredients "
+      "FROM recipes r "
+      "LEFT JOIN recipe_directions rd  ON rd.recipe_id = r.id "
+      "LEFT JOIN recipe_ingredients ri  ON ri.recipe_id = r.id "
+      "LEFT JOIN ingredients i ON i.id = ri.ingredient_id "
+      "GROUP BY r.id"
+   )
+   rows = database.select(query)
+   recipes = []
+   for row in rows:
+      recipe = {}
+      recipe['id'] = row['id']
+      recipe['name'] = row['name']
+      recipe['description'] = row['description']
+      recipe['image'] = row['image_url']
+      recipe['prepTime'] = row['prep_time']
+      recipe['cookTime'] = row['cook_time']
+      recipe['servings'] = row['servings']
+      recipe['createdBy'] = row['created_by']
+      recipe['directions'] = [] if row['directions'] is None else row['directions'].split('**')
+
+      ingredients = []
+      for ingr in [] if row['ingredients'] is None else row['ingredients'].split('**'):
+         if ingr is None:
+            continue
+         fields = ingr.split(';;')
+         ingredient = {}
+         ingredient['id'] = fields[0]
+         ingredient['name'] = fields[1]
+         ingredient['measurement'] = fields[2]
+         ingredient['amount'] = fields[3]
+         ingredients.append(ingredient)
+
+      recipe['ingredients'] = ingredients
+      recipes.append(recipe)
+
+   return recipes

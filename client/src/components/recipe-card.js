@@ -51,13 +51,13 @@ export default function RecipeCard(props) {
                <Typography gutterBottom variant="h4">{props.recipe.name}</Typography>
                <Typography component="p">{props.recipe.description}</Typography>
                <Grid container spacing={4} justify="space-between" direction="row">
-                  <Grid item xs={4}>
-                     <Typography variant="body1">Prep Time: {props.recipe.prepTime}</Typography>
+                  <Grid item>
+                     <Typography variant="body1">Prep Time: {props.recipe.prepTime} min</Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                     <Typography variant="body1" align={'center'}>Cook Time: {props.recipe.cookTime}</Typography>
+                  <Grid item>
+                     <Typography variant="body1" align={'center'}>Cook Time: {props.recipe.cookTime} min</Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item>
                      <Typography variant="body1" align={'right'}>Servings: {props.recipe.servings}</Typography>
                   </Grid>
                </Grid>
@@ -71,7 +71,6 @@ export default function RecipeCard(props) {
                onClick={handleClickExpand}
                aria-expanded={expanded}
                aria-label="show more">
-               
                <ExpandMoreIcon />
             </IconButton>
          </CardActions>
