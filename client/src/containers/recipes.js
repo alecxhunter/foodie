@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import RecipeCard from '../components/recipe-card';
 import NewRecipeModal from '../components/modals/new-recipe-modal/new-recipe-modal';
 import { Grid, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+   margin: {
+      margin: theme.spacing(1)
+   }
+}))
 
 export default function Recipes() {
+   const classes = useStyles();
    const [recipes, setRecipes] = useState([]);
    const [showModal, setShowModal] = useState(false);
 
@@ -45,26 +53,22 @@ export default function Recipes() {
    }
 
    return (
-      <Grid container spacing={1}>
-         <Grid item xs={12}>
-            <Button variant="contained" color="primary" onClick={handleClickNewRecipeBtn}>Submit New Recipe</Button>
-         </Grid>
-         <Grid item xs={12}>
-            <Grid container spacing={4} justify="center">
-               {
-                  recipes.map(recipe => (
-                     <Grid item key={recipe.id} sm={12} md={6}>
-                        <RecipeCard recipe={recipe} />
-                     </Grid>
-                  ))
-               }
-            </Grid>
+      <Fragment>
+         <Button className={classes.margin} variant="contained" color="primary" onClick={handleClickNewRecipeBtn}>Submit New Recipe</Button>
+         <Grid container spacing={4} justify="center">
+            {
+               recipes.map(recipe => (
+                  <Grid item key={recipe.id} sm={12} md={6}>
+                     <RecipeCard recipe={recipe} />
+                  </Grid>
+               ))
+            }
          </Grid>
          <NewRecipeModal
             showModal={showModal}
             onClose={handleCloseNewRecipe}
             onSave={handleSaveNewRecipe}
          />
-      </Grid>
+      </Fragment>
    )
 }
