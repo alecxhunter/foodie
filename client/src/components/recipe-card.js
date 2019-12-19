@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
    avatar: {
       backgroundColor: red[500],
    },
+   bottomGutter: {
+      marginBottom: theme.spacing(1)
+   }
 }));
 
 export default function RecipeCard(props) {
@@ -48,8 +51,8 @@ export default function RecipeCard(props) {
                title={props.recipe.name}
             />
             <CardContent>
-               <Typography gutterBottom variant="h4">{props.recipe.name}</Typography>
-               <Typography component="p">{props.recipe.description}</Typography>
+               <Typography variant="h4" gutterBottom>{props.recipe.name}</Typography>
+               <Typography component="p" className={classes.bottomGutter}>{props.recipe.description}</Typography>
                <Grid container spacing={4} justify="space-between" direction="row">
                   <Grid item>
                      <Typography variant="body1">Prep Time: {props.recipe.prepTime} min</Typography>
