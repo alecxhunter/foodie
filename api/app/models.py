@@ -43,7 +43,7 @@ class Recipe(db.Model):
       return f'<Recipe id: {self.id} name: {self.name}>'
 
 
-class RecipeDirections(db.Model):
+class RecipeDirection(db.Model):
    __tablename__ = 'recipe_directions'
 
    id = db.Column(db.Integer, primary_key=True)

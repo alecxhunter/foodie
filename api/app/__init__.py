@@ -10,6 +10,7 @@ db = SQLAlchemy()
 from app import schemas
 ingredients_schema = schemas.IngredientSchema(many=True)
 ingredient_measurements_schema = schemas.IngredientMeasurementSchema(many=True)
+recipes_schema = schemas.RecipeSchema(many=True)
 
 def create_app(config_name):
    app = Flask(__name__, instance_relative_config=True)
@@ -34,5 +35,12 @@ def create_app(config_name):
       if request.method == 'GET':
          ingredient_measurements = models.IngredientMeasurement.query.all()
          return jsonify(ingredient_measurements_schema.dump(ingredient_measurements))
+
+   @cross_origin()
+   @app.route('/recipes', methods=['GET'])
+   def recipes_api():
+      if request.method == 'GET':
+         recipes = models.Recipe.query.all()
+         return jsonify(recipes_schema.dump(recipes))
 
    return app
