@@ -25,7 +25,7 @@ function IngredientsTab(props) {
    const [nextIngredient, setNextIngredient] = useState({
       id: 0,
       name: '',
-      measurement: '',
+      measurement: "",
       amount: 0
    });
    const [editStates, setEditStates] = useState(Array(props.ingredients.length).fill(false));
@@ -54,7 +54,7 @@ function IngredientsTab(props) {
             ...nextIngredient,
             [prop]: e.target.value,
             id: ingr.id,
-            measurement: ingr.default_measurement ? ingr.default_measurement : ''
+            measurement: ingr.default_measurement ? ingr.default_measurement.measurement : ""
          });
       } else {
          setNextIngredient({ ...nextIngredient, [prop]: e.target.value });
@@ -173,10 +173,12 @@ function IngredientsTab(props) {
                valueProperty="id"
                label="Ingredient"
             />
+            {console.log(nextIngredient)}
             <FormControl className={clsx(classes.formControl, classes.margin)}>
-               <InputLabel>Measurement</InputLabel>
+               <InputLabel shrink>Measurement</InputLabel>
                <Select
                   value={nextIngredient.measurement}
+                  displayEmpty
                   onChange={handleChangeNextIngredientProp('measurement')}
                >
                   <MenuItem value="">None</MenuItem>
@@ -184,7 +186,7 @@ function IngredientsTab(props) {
                      allIngredientMeasurements.map(ingrMeas => {
                         return (
                            <MenuItem key={ingrMeas.id} value={ingrMeas.measurement}>
-                              {ingrMeas.name}
+                              {ingrMeas.description}
                            </MenuItem>
                         )
                      })
