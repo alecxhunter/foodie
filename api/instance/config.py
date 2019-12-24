@@ -1,2 +1,2 @@
 SECRET_KEY = 'secretkey'
-SQLALCHEMY_DATABASE_URL = 'mysql://username:password@localhost/db_name'
+SQLALCHEMY_DATABASE_URI = 'mysql://user:password@127.0.0.1/dbname'
