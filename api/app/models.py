@@ -8,10 +8,11 @@ class Ingredient(db.Model):
    name = db.Column(db.String(60), index=True, unique=True)
    measurement_id = db.Column(db.Integer, db.ForeignKey('ingredient_measurements.id'))
 
-   default_measurement = db.relationship('IngredientMeasurement', backref="ingredients")
+   #default_measurement = db.relationship('IngredientMeasurement', backref="ingredients")
+   recipe_ingredients = db.relationship('RecipeIngredient', backref='ingredient')
 
    def __repr__(self):
-      return f'<Ingredient [{self.name}, {self.default_measurement.measurement}]>'
+      return f'<Ingredient {self.name}>'
 
 
 class IngredientMeasurement(db.Model):
@@ -20,6 +21,9 @@ class IngredientMeasurement(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    measurement = db.Column(db.String(8), index=True)
    description = db.Column(db.String(60), index=True)
+
+   ingredients = db.relationship('Ingredient', backref='default_measurement')
+   recipe_ingredient_measurement = db.relationship('RecipeIngredient', backref='measurement')
 
    def __repr__(self):
       return f'<IngredientMeasurement {self.description} ({self.measurement})>'
@@ -64,8 +68,8 @@ class RecipeIngredient(db.Model):
    amount = db.Column(db.Integer)
    measurement_id = db.Column(db.Integer, db.ForeignKey('ingredient_measurements.id'))
 
-   ingredient = db.relationship('Ingredient', backref='recipe_ingredients')
-   measurement = db.relationship('IngredientMeasurement', backref='recipe_ingredients')
+   #ingredient = db.relationship('Ingredient', backref='recipe_ingredients')
+   #measurement = db.relationship('IngredientMeasurement', backref='recipe_ingredients')
 
    def __repr__(self):
       return f'<RecipeIngredient recipe_id: {self.recipe_id} ingredient_id: {self.ingredient_id} amount: {self.amount}>'

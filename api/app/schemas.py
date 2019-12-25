@@ -2,13 +2,13 @@ from marshmallow import Schema, fields
 
 
 class IngredientMeasurementSchema(Schema):
-   id = fields.Int(dump_only=True)
+   id = fields.Int()
    measurement = fields.Str()
    description = fields.Str()
 
 
 class IngredientSchema(Schema):
-   id = fields.Int(dump_only=True)
+   id = fields.Int()
    name = fields.Str()
    default_measurement = fields.Nested(IngredientMeasurementSchema)
 

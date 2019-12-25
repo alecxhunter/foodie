@@ -19,16 +19,15 @@ const useStyles = makeStyles(theme => ({
    fullWidth: {
       width: '100%'
    }
-}))
+}));
 
 function IngredientsTab(props) {
    const classes = useStyles();
    const [allIngredients, setAllIngredients] = useState([]);
    const [allIngredientMeasurements, setAllIngredientMeasurements] = useState([]);
    const [nextIngredient, setNextIngredient] = useState({
-      id: 0,
-      name: '',
-      measurement: "",
+      ingredientId: 0,
+      measurementId: 0,
       amount: 0
    });
    const [editStates, setEditStates] = useState(Array(props.ingredients.length).fill(false));
@@ -49,15 +48,13 @@ function IngredientsTab(props) {
    }, []);
 
    const handleChangeNextIngredientProp = prop => e => {
-      // If updating the name property and the name of the ingredient exists in allIngredients
-      // then set the default measurement property as well as the id
-      if (prop === 'name' && allIngredients.find(i => i.name === e.target.value)) {
-         let ingr = allIngredients.find(i => i.name === e.target.value);
+      // If updating ingredientId, then set the default measurement as well
+      if (prop === 'ingredientId' && allIngredients.find(i => i.id === e.target.value)) {
+         const ingr = allIngredients.find(i => i.id === e.target.value);
          setNextIngredient({
             ...nextIngredient,
-            [prop]: e.target.value,
-            id: ingr.id,
-            measurement: ingr.default_measurement ? ingr.default_measurement.measurement : ""
+            ingredientId: e.target.value,
+            measurementId: ingr.default_measurement ? ingr.default_measurement.id : 0
          });
       } else {
          setNextIngredient({ ...nextIngredient, [prop]: e.target.value });
@@ -73,12 +70,10 @@ function IngredientsTab(props) {
    const changeIngredientProp = (idx, prop) => e => {
       let ingr = props.ingredients[idx];
       ingr[prop] = e.target.value;
-      // If updating the name property and the name of the ingredient exists in allIngredients
-      // then set the default measurement property as well as the id
-      if (prop === 'name' && allIngredients.find(i => i.name === e.target.value)) {
-         let tmp = allIngredients.find(i => i.name === e.target.value);
-         ingr.id = tmp.id;
-         ingr.measurement = tmp.default_measurement ? tmp.default_measurement : '';
+      // If updating ingredientId, then set the default measurement as well
+      if (prop === 'ingredientId' && allIngredients.find(i => i.id === e.target.value)) {
+         const tmp = allIngredients.find(i => i.id === e.target.value);
+         ingr.measurementId = tmp.default_measurement ? tmp.default_measurement.id : 0;
       }
       props.handleChangeIngredient(idx, ingr);      
    }
@@ -91,10 +86,22 @@ function IngredientsTab(props) {
    const addIngredient = () => {
       props.handleAddIngredient(nextIngredient);
       setNextIngredient({
-         name: '',
-         measurement: '',
+         ingredientId: 0,
+         measurementId: 0,
          amount: 0
       });
+   }
+
+   const getIngredientProp = (id, prop) => {
+      const ingr = allIngredients.find(i => i.id === id);
+      return ingr ? ingr[prop] : '';
+      //return allIngredients.find(ingr => ingr.id === id);
+   }
+
+   const getMeasurementProp = (id, prop) => {
+      const meas = allIngredientMeasurements.find(m => m.id === id);
+      return meas ? meas[prop] : '';
+      //return allIngredientMeasurements.find(ingrMeas => ingrMeas.id === id);
    }
 
    return (
@@ -109,24 +116,24 @@ function IngredientsTab(props) {
                               <SearchBar
                                  className={clsx(classes.margin, classes.fullWidth)}
                                  data={allIngredients}
-                                 value={ingr.name}
-                                 onChange={changeIngredientProp(idx, 'name')}
+                                 onChange={changeIngredientProp(idx, 'ingredientId')}
+                                 initialValue={getIngredientProp(ingr.ingredientId, 'name')}
                                  searchProperty="name"
                                  displayProperty="name"
                                  valueProperty="id"
                                  label="Ingredient"
                               />
                               <FormControl className={clsx(classes.formControl, classes.margin)}>
-                                 <InputLabel shrink>Measurement</InputLabel>
+                                 <InputLabel>Measurement</InputLabel>
                                  <Select
-                                    value={ingr.measurement}
-                                    displayEmpty
-                                    onChange={changeIngredientProp(idx, 'measurement')}
+                                    value={ingr.measurementId}
+                                    onChange={changeIngredientProp(idx, 'measurementId')}
                                  >
+                                    <MenuItem value={0}>None</MenuItem>
                                     {
                                        allIngredientMeasurements.map(ingrMeas => {
                                           return (
-                                             <MenuItem key={ingrMeas.id} value={ingrMeas.measurement}>
+                                             <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
                                                 {ingrMeas.description}
                                              </MenuItem>
                                           )
@@ -154,7 +161,7 @@ function IngredientsTab(props) {
                                     <DeleteIcon />
                                  </IconButton>
                               </ListItemIcon>
-                              <ListItemText primary={<Typography component="p">{`${ingr.amount} ${ingr.measurement} ${ingr.name}`}</Typography>} />
+                              <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
                               <ListItemIcon>
                                  <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
                                     <EditIcon />
@@ -170,25 +177,23 @@ function IngredientsTab(props) {
             <SearchBar
                className={clsx(classes.margin, classes.fullWidth)}
                data={allIngredients}
-               value={nextIngredient.name}
-               onChange={handleChangeNextIngredientProp('name')}
+               onChange={handleChangeNextIngredientProp('ingredientId')}
                searchProperty="name"
                displayProperty="name"
                valueProperty="id"
                label="Ingredient"
             />
             <FormControl className={clsx(classes.formControl, classes.margin)}>
-               <InputLabel shrink>Measurement</InputLabel>
+               <InputLabel>Measurement</InputLabel>
                <Select
-                  value={nextIngredient.measurement}
-                  displayEmpty
-                  onChange={handleChangeNextIngredientProp('measurement')}
+                  value={nextIngredient.measurementId}
+                  onChange={handleChangeNextIngredientProp('measurementId')}
                >
-                  <MenuItem value="">None</MenuItem>
+                  <MenuItem value={0}>None</MenuItem>
                   {
                      allIngredientMeasurements.map(ingrMeas => {
                         return (
-                           <MenuItem key={ingrMeas.id} value={ingrMeas.measurement}>
+                           <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
                               {ingrMeas.description}
                            </MenuItem>
                         )

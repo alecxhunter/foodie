@@ -32,7 +32,9 @@ export default function Recipes() {
 
    const handleSaveNewRecipe = recipe => {
       console.log('Recipes.handleSaveNewRecipe');
-      console.log(JSON.stringify(recipe));
+      // Set all measurementIds to null if they are 0
+      recipe.ingredients.map(ingr => ingr.measurementId = ingr.measurementId === 0 ? null : ingr.measurementId)
+      console.log(JSON.stringify(recipe, null, 3));
 
       fetch('http://localhost:5000/recipes', {
          headers: {
@@ -44,7 +46,7 @@ export default function Recipes() {
       }).then(res => {
          return res.json();
       }).then(data => {
-         setRecipes([...recipes, data]);
+         setRecipes([...recipes, data.recipe]);
       });
         
       setShowModal(false);

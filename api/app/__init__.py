@@ -72,11 +72,11 @@ def create_app(config_name):
             db.session.add(recipe_direction)
             db.session.commit()
 
-         for ingredient in data['ingredients']:
+         for ingr_data in data['ingredients']:
             recipe_ingredient = models.RecipeIngredient(
-               ingredient_id=ingredient['ingredient_id'],
-               amount=ingredient['amount'],
-               measurement_id=ingredient['measurement_id'],
+               ingredient_id=ingr_data['ingredient_id'],
+               measurement_id=ingr_data['measurement_id'],
+               amount=ingr_data['amount'],
                recipe=recipe
             )
             db.session.add(recipe_ingredient)
