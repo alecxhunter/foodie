@@ -72,6 +72,16 @@ def create_app(config_name):
             db.session.add(recipe_direction)
             db.session.commit()
 
+         for ingredient in data['ingredients']:
+            recipe_ingredient = models.RecipeIngredient(
+               ingredient_id=ingredient['ingredient_id'],
+               amount=ingredient['amount'],
+               measurement_id=ingredient['measurement_id'],
+               recipe=recipe
+            )
+            db.session.add(recipe_ingredient)
+            db.session.commit()
+
          res = recipe_schema.dump(models.Recipe.query.get(recipe.id))
          return jsonify({'message': 'Created new recipe', 'recipe': res})
 

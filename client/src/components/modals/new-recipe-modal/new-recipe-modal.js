@@ -184,7 +184,7 @@ export default function NewRecipeModal(props) {
                         fullWidth
                         variant="outlined"
                         value={recipe.imageUrl}
-                        onChange={handleChangeRecipeProp('image')}
+                        onChange={handleChangeRecipeProp('imageUrl')}
                      />
                   </Grid>
                   <Grid item xs={3}>

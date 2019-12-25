@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, List, ListItem, Typography } from '@material-ui/core';
 
 const formatIngredient = ingredient => {
-   return `${ingredient.amount} ${ingredient.measurement ? ingredient.measurement : ''} ${ingredient.name}`
+   return `${ingredient.amount} ${ingredient.measurement ? ingredient.measurement.measurement : ''} ${ingredient.ingredient.name}`
 }
 
 export default function RecipeDetails(props) {

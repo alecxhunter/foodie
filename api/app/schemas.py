@@ -22,11 +22,13 @@ class RecipeDirectionSchema(Schema):
 
 class RecipeIngredientSchema(Schema):
    id = fields.Int(dump_only=True)
-   recipe_id = fields.Int()
+   recipe_id = fields.Int(data_key='recipeId')
    amount = fields.Int()
+   ingredient_id = fields.Int(data_key='ingredientId')
+   measurement_id = fields.Int(data_key='measurementId')
 
    ingredient = fields.Nested(IngredientSchema)
-   mesurement = fields.Nested(IngredientMeasurementSchema)
+   measurement = fields.Nested(IngredientMeasurementSchema)
 
 
 class RecipeSchema(Schema):
