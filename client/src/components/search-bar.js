@@ -67,7 +67,7 @@ function SearchBar(props) {
                })
             }
          </ul>
-         <TextField variant="standard" label={props.label ? props.label : 'Search'} value={props.value} onChange={handleChangeQuery} />
+         <TextField variant="standard" label={props.label ? props.label : 'Search'} value={props.value} onChange={handleChangeQuery} fullWidth />
       </div>
    );
 }

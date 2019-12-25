@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
    },
    margin: {
       margin: theme.spacing(1)
+   },
+   fullWidth: {
+      width: '100%'
    }
 }))
 
@@ -99,12 +102,12 @@ function IngredientsTab(props) {
          {
             props.ingredients.map((ingr, idx) => {
                return (
-                  <ListItem key={idx}>
+                  <ListItem key={idx} disableGutters>
                      {
                         editStates[idx] ?
                            <Fragment>
                               <SearchBar
-                                 className={classes.margin}
+                                 className={clsx(classes.margin, classes.fullWidth)}
                                  data={allIngredients}
                                  value={ingr.name}
                                  onChange={changeIngredientProp(idx, 'name')}
@@ -113,17 +116,19 @@ function IngredientsTab(props) {
                                  valueProperty="id"
                                  label="Ingredient"
                               />
+                              {console.log(ingr)}
                               <FormControl className={clsx(classes.formControl, classes.margin)}>
-                                 <InputLabel>Measurement</InputLabel>
+                                 <InputLabel shrink>Measurement</InputLabel>
                                  <Select
                                     value={ingr.measurement}
+                                    displayEmpty
                                     onChange={changeIngredientProp(idx, 'measurement')}
                                  >
                                     {
                                        allIngredientMeasurements.map(ingrMeas => {
                                           return (
                                              <MenuItem key={ingrMeas.id} value={ingrMeas.measurement}>
-                                                {ingrMeas.name}
+                                                {ingrMeas.description}
                                              </MenuItem>
                                           )
                                        })
@@ -162,9 +167,9 @@ function IngredientsTab(props) {
                );
             })
          }
-         <ListItem>
+         <ListItem disableGutters>
             <SearchBar
-               className={classes.margin}
+               className={clsx(classes.margin, classes.fullWidth)}
                data={allIngredients}
                value={nextIngredient.name}
                onChange={handleChangeNextIngredientProp('name')}
@@ -173,7 +178,6 @@ function IngredientsTab(props) {
                valueProperty="id"
                label="Ingredient"
             />
-            {console.log(nextIngredient)}
             <FormControl className={clsx(classes.formControl, classes.margin)}>
                <InputLabel shrink>Measurement</InputLabel>
                <Select

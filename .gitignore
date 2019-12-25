@@ -4,3 +4,4 @@ package-lock.json
 *.log
 __pycache__
 .vscode
+api/instance/config.py
