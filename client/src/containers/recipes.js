@@ -32,7 +32,7 @@ export default function Recipes() {
       console.log('Recipes.handleSaveNewRecipe');
       console.log(JSON.stringify(recipe));
 
-      fetch('http://localhost:5000/recipes', {
+      /* fetch('http://localhost:5000/recipes', {
          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export default function Recipes() {
          return res.json();
       }).then(data => {
          setRecipes([...recipes, data]);
-      });
+      }); */
         
       setShowModal(false);
    }

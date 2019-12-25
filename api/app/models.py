@@ -36,8 +36,8 @@ class Recipe(db.Model):
    cook_time = db.Column(db.Integer)
    servings = db.Column(db.Integer)
 
-   directions = db.relationship('RecipeDirection', backref='recipes')
-   ingredients = db.relationship('RecipeIngredient', backref='recipes')
+   directions = db.relationship('RecipeDirection', backref='recipe')
+   ingredients = db.relationship('RecipeIngredient', backref='recipe')
 
    def __repr__(self):
       return f'<Recipe id: {self.id} name: {self.name}>'

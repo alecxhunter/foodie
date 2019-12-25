@@ -47,7 +47,7 @@ export default function RecipeCard(props) {
                component="img"
                alt="Recipe image"
                height="300px"
-               image={props.recipe.image}
+               image={props.recipe.imageUrl}
                title={props.recipe.name}
             />
             <CardContent>

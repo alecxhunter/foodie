@@ -27,7 +27,7 @@ export default function RecipeDetails(props) {
                   {
                      props.recipe.directions.map((dir, idx) =>
                         <ListItem key={idx} disableGutters>
-                           <Typography variant="subtitle1">{dir}</Typography>
+                           <Typography variant="subtitle1">{dir.text}</Typography>
                         </ListItem>
                      )
                   }

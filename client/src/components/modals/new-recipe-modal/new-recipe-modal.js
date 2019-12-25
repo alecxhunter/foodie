@@ -48,7 +48,7 @@ export default function NewRecipeModal(props) {
    const [recipe, setRecipe] = useState({
       name: '',
       description: '',
-      image: '',
+      imageUrl: '',
       prepTime: 0,
       cookTime: 0,
       servings: 0,
@@ -77,11 +77,15 @@ export default function NewRecipeModal(props) {
 
    const handleDeleteDirection = idx => {
       let directions = [...recipe.directions];
-      setRecipe({ ...recipe, directions: directions.filter((d, i) => idx != i)});
+      setRecipe({
+         ...recipe,
+         directions: directions.filter((d, i) => idx != i).map((dir, idx) => dir['order'] = idx)
+      });
    }
 
-   const handleAddDirection = dir => {
-      let directions = [...recipe.directions, dir];
+   const handleAddDirection = text => {
+      let directions = [...recipe.directions, { text }];
+      directions.map((dir, idx) => dir['order'] = idx)
       setRecipe({ ...recipe, directions });
    }
 
@@ -179,7 +183,7 @@ export default function NewRecipeModal(props) {
                         className={classes.margin}
                         fullWidth
                         variant="outlined"
-                        value={recipe.image}
+                        value={recipe.imageUrl}
                         onChange={handleChangeRecipeProp('image')}
                      />
                   </Grid>
@@ -200,6 +204,7 @@ export default function NewRecipeModal(props) {
          <TabPanel value={selectedTabIdx} index={1}>
             <EditableList
                values={recipe.directions || []}
+               displayProp="text"
                handleChangeValue={handleChangeDirection}
                handleAddNewValue={handleAddDirection}
                handleDeleteValue={handleDeleteDirection}

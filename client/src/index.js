@@ -14,7 +14,7 @@ const App = () => (
             <NavBar />
          </Toolbar>
       </AppBar>
-      <main>
+      <main style={{overflowX: 'hidden'}}>
           <Recipes />
       </main>
    </MuiThemeProvider>

@@ -116,7 +116,6 @@ function IngredientsTab(props) {
                                  valueProperty="id"
                                  label="Ingredient"
                               />
-                              {console.log(ingr)}
                               <FormControl className={clsx(classes.formControl, classes.margin)}>
                                  <InputLabel shrink>Measurement</InputLabel>
                                  <Select

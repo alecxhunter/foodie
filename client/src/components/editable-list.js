@@ -45,7 +45,7 @@ export default function EditableList(props) {
                               fullWidth
                               multiline
                               rowsMax={3}
-                              value={value}
+                              value={value[props.displayProp]}
                               onChange={props.handleChangeValue(idx)}
                            />
                            <ListItemIcon>
@@ -61,7 +61,7 @@ export default function EditableList(props) {
                                  <DeleteIcon />
                               </IconButton>
                            </ListItemIcon>
-                           <ListItemText primary={<Typography component="p">{value}</Typography>} />
+                           <ListItemText primary={<Typography component="p">{value[props.displayProp]}</Typography>} />
                            <ListItemIcon>
                               <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
                                  <EditIcon />
