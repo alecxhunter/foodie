@@ -2,30 +2,30 @@ from marshmallow import Schema, fields
 
 
 class IngredientMeasurementSchema(Schema):
-   id = fields.Int()
-   measurement = fields.Str()
-   description = fields.Str()
+   id = fields.Int(dump_only=True)
+   measurement = fields.Str(required=True)
+   description = fields.Str(required=True)
 
 
 class IngredientSchema(Schema):
-   id = fields.Int()
-   name = fields.Str()
+   id = fields.Int(dump_only=True)
+   name = fields.Str(required=True)
    default_measurement = fields.Nested(IngredientMeasurementSchema)
 
 
 class RecipeDirectionSchema(Schema):
    id = fields.Int(dump_only=True)
    recipe_id = fields.Int()
-   order = fields.Int()
-   text = fields.Str()
+   order = fields.Int(required=True)
+   text = fields.Str(required=True)
 
 
 class RecipeIngredientSchema(Schema):
    id = fields.Int(dump_only=True)
    recipe_id = fields.Int(data_key='recipeId')
-   amount = fields.Int()
-   ingredient_id = fields.Int(data_key='ingredientId')
-   measurement_id = fields.Int(data_key='measurementId')
+   amount = fields.Int(required=True)
+   ingredient_id = fields.Int(required=True, data_key='ingredientId')
+   measurement_id = fields.Int(required=True, data_key='measurementId')
 
    ingredient = fields.Nested(IngredientSchema)
    measurement = fields.Nested(IngredientMeasurementSchema)
@@ -33,12 +33,12 @@ class RecipeIngredientSchema(Schema):
 
 class RecipeSchema(Schema):
    id = fields.Int(dump_only=True)
-   name = fields.Str()
-   description = fields.Str()
-   image_url = fields.Str(data_key='imageUrl')
-   prep_time = fields.Int(data_key='prepTime')
-   cook_time = fields.Int(data_key='cookTime')
-   servings = fields.Int()
+   name = fields.Str(required=True)
+   description = fields.Str(required=True)
+   image_url = fields.Str(required=True, data_key='imageUrl')
+   prep_time = fields.Int(required=True, data_key='prepTime')
+   cook_time = fields.Int(required=True, data_key='cookTime')
+   servings = fields.Int(required=True)
 
    directions = fields.Nested(RecipeDirectionSchema(many=True))
    ingredients = fields.Nested(RecipeIngredientSchema(many=True))

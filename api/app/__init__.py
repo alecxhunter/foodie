@@ -54,8 +54,6 @@ def create_app(config_name):
          except ValidationError as err:
             return err.messages, 422
 
-         pprint(data)
-
          recipe = models.Recipe(
             name=data['name'],
             description=data['description'],
@@ -65,24 +63,23 @@ def create_app(config_name):
             servings=data['servings']
          )
          db.session.add(recipe)
-         db.session.commit()
 
          for direction in data['directions']:
             recipe_direction = models.RecipeDirection(order=direction['order'], text=direction['text'], recipe=recipe)
             db.session.add(recipe_direction)
-            db.session.commit()
 
          for ingr_data in data['ingredients']:
             recipe_ingredient = models.RecipeIngredient(
                ingredient_id=ingr_data['ingredient_id'],
-               measurement_id=ingr_data['measurement_id'],
+               measurement_id=ingr_data['measurement_id'] if ingr_data['measurement_id'] != 0 else None,
                amount=ingr_data['amount'],
                recipe=recipe
             )
             db.session.add(recipe_ingredient)
-            db.session.commit()
-
+         
+         db.session.commit()
          res = recipe_schema.dump(models.Recipe.query.get(recipe.id))
+
          return jsonify({'message': 'Created new recipe', 'recipe': res})
 
    return app
