@@ -7,13 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import RecipeDetails from './recipe-details';
 
 const useStyles = makeStyles(theme => ({
-   card: {
-      maxWidth: 345,
-   },
-   media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-   },
    expand: {
       transform: 'rotate(0deg)',
       marginLeft: 'auto',
@@ -24,11 +17,11 @@ const useStyles = makeStyles(theme => ({
    expandOpen: {
       transform: 'rotate(180deg)',
    },
-   avatar: {
-      backgroundColor: red[500],
-   },
    bottomGutter: {
       marginBottom: theme.spacing(1)
+   },
+   noPadding: {
+      padding: 0
    }
 }));
 
@@ -64,7 +57,7 @@ export default function RecipeCard(props) {
                </Grid>
             </Grid>
          </CardContent>
-         <CardActions>
+         <CardActions className={classes.noPadding}>
             <IconButton
                className={clsx(classes.expand, {
                   [classes.expandOpen]: expanded,
