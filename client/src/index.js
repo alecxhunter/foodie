@@ -14,7 +14,7 @@ const App = () => (
             <NavBar />
          </Toolbar>
       </AppBar>
-      <main style={{overflow: 'hidden'}}>
+      <main style={{overflow: 'hidden', marginRight: theme.spacing(2), marginLeft: theme.spacing(2)}}>
           <Recipes />
       </main>
    </MuiThemeProvider>

@@ -40,5 +40,5 @@ class RecipeSchema(Schema):
    cook_time = fields.Int(required=True, data_key='cookTime')
    servings = fields.Int(required=True)
 
-   directions = fields.Nested(RecipeDirectionSchema(many=True))
-   ingredients = fields.Nested(RecipeIngredientSchema(many=True))
+   directions = fields.Nested(required=True, RecipeDirectionSchema(many=True))
+   ingredients = fields.Nested(required=True, RecipeIngredientSchema(many=True))
