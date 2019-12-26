@@ -42,30 +42,28 @@ export default function RecipeCard(props) {
 
    return (
       <Card>
-         <CardActionArea>
-            <CardMedia
-               component="img"
-               alt="Recipe image"
-               height="300px"
-               image={props.recipe.imageUrl}
-               title={props.recipe.name}
-            />
-            <CardContent>
-               <Typography variant="h4" gutterBottom>{props.recipe.name}</Typography>
-               <Typography component="p" className={classes.bottomGutter}>{props.recipe.description}</Typography>
-               <Grid container spacing={4} justify="space-between" direction="row">
-                  <Grid item>
-                     <Typography variant="body1">Prep Time: {props.recipe.prepTime} min</Typography>
-                  </Grid>
-                  <Grid item>
-                     <Typography variant="body1" align={'center'}>Cook Time: {props.recipe.cookTime} min</Typography>
-                  </Grid>
-                  <Grid item>
-                     <Typography variant="body1" align={'right'}>Servings: {props.recipe.servings}</Typography>
-                  </Grid>
+         <CardMedia
+            component="img"
+            alt="Recipe image"
+            height="300px"
+            image={props.recipe.imageUrl}
+            title={props.recipe.name}
+         />
+         <CardContent>
+            <Typography variant="h4" gutterBottom>{props.recipe.name}</Typography>
+            <Typography component="p" className={classes.bottomGutter}>{props.recipe.description}</Typography>
+            <Grid container spacing={4} justify="space-between" direction="row">
+               <Grid item>
+                  <Typography variant="body1">Prep Time: {props.recipe.prepTime} min</Typography>
                </Grid>
-            </CardContent>
-         </CardActionArea>
+               <Grid item>
+                  <Typography variant="body1" align={'center'}>Cook Time: {props.recipe.cookTime} min</Typography>
+               </Grid>
+               <Grid item>
+                  <Typography variant="body1" align={'right'}>Servings: {props.recipe.servings}</Typography>
+               </Grid>
+            </Grid>
+         </CardContent>
          <CardActions>
             <IconButton
                className={clsx(classes.expand, {
