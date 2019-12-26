@@ -1,10 +1,11 @@
-import React, { Fragment } from "react";
-import ReactDOM from "react-dom";
-import Recipes from "./containers/recipes";
-import { AppBar, Toolbar, CssBaseline } from "@material-ui/core";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppBar, Toolbar, CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+
+import Recipes from './containers/recipes';
 import theme from './theme';
-import NavBar from "./components/navbar";
+import NavBar from './components/navbar';
 
 const App = () => (
    <MuiThemeProvider theme={theme}>
