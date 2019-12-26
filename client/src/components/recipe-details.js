@@ -9,8 +9,8 @@ export default function RecipeDetails(props) {
    console.log(props.recipe.ingredients);
    return (
       <div className="recipe-details">
-         <Grid container spacing={1}>
-            <Grid item xs={3}>
+         <Grid container spacing={4}>
+            <Grid item xs={4}>
                <Typography variant="h5">Ingredients</Typography>
                <List>
                   {
@@ -22,7 +22,7 @@ export default function RecipeDetails(props) {
                   }
                </List>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
                <Typography variant="h5">Directions</Typography>
                <List>
                   {
