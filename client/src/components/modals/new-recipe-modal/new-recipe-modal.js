@@ -27,10 +27,6 @@ TabPanel.propTypes = {
 };
 
 const useStyles = makeStyles(theme => ({
-   root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-   },
    margin: {
       margin: theme.spacing(1),
    },
