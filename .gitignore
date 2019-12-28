@@ -1,6 +1,11 @@
+# IDEs
 .idea/
+.vscode
+
+# Packages
 node_modules
 package-lock.json
+
+# Runtime files
 *.log
 __pycache__
-.vscode
