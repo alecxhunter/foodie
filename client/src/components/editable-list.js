@@ -32,7 +32,7 @@ export default function EditableList(props) {
    }
 
    return (
-      <List>
+      <List className={props.className}>
          {(props.values || []).map((value, idx) => {
             return (
                <ListItem key={idx}>

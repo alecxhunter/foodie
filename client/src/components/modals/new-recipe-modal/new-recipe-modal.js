@@ -40,6 +40,10 @@ const useStyles = makeStyles(theme => ({
    indicator: {
       background: theme.palette.primary.dark,
       height: 4
+   },
+   directionsList: {
+      maxHeight: 400,
+      overflowY: 'scroll'
    }
 }));
 
@@ -203,6 +207,7 @@ export default function NewRecipeModal(props) {
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
             <EditableList
+               className={classes.directionsList}
                values={recipe.directions || []}
                displayProp="text"
                handleChangeValue={handleChangeDirection}
