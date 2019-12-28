@@ -9,3 +9,6 @@ package-lock.json
 # Runtime files
 *.log
 __pycache__
+
+api/migrations/
+api/instance/
