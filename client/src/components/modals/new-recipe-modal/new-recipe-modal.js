@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
    },
    directionsList: {
       maxHeight: 400,
-      overflowY: 'scroll'
+      overflowY: 'auto'
    }
 }));
 
@@ -71,7 +71,7 @@ export default function NewRecipeModal(props) {
 
    const handleChangeDirection = idx => e => {
       let directions = [...recipe.directions];
-      directions[idx] = e.target.value;
+      directions[idx].text = e.target.value;
       setRecipe({ ...recipe, directions });
    }
 

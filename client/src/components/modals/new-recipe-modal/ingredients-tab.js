@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { List, ListItem, ListItemIcon, InputLabel, FormControl, Select, MenuItem, IconButton, TextField, ListItemText, Typography } from '@material-ui/core';
@@ -18,6 +18,10 @@ const useStyles = makeStyles(theme => ({
    },
    fullWidth: {
       width: '100%'
+   },
+   ingredientsList: {
+      maxHeight: 400,
+      overflowY: 'auto'
    }
 }));
 
@@ -95,17 +99,15 @@ function IngredientsTab(props) {
    const getIngredientProp = (id, prop) => {
       const ingr = allIngredients.find(i => i.id === id);
       return ingr ? ingr[prop] : '';
-      //return allIngredients.find(ingr => ingr.id === id);
    }
 
    const getMeasurementProp = (id, prop) => {
       const meas = allIngredientMeasurements.find(m => m.id === id);
       return meas ? meas[prop] : '';
-      //return allIngredientMeasurements.find(ingrMeas => ingrMeas.id === id);
    }
 
    return (
-      <List>
+      <List className={classes.ingredientsList}>
          {
             props.ingredients.map((ingr, idx) => {
                return (
