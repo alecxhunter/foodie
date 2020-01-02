@@ -52,7 +52,7 @@ def create_app(config_name):
          try:
             data = recipe_schema.load(json_data)
          except ValidationError as err:
-            return err.messages, 422
+            return jsonify({'errors': err.messages}), 422
 
          recipe = models.Recipe(
             name=data['name'],

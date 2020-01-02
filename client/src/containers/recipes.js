@@ -42,12 +42,19 @@ export default function Recipes() {
          method: 'POST',
          body: JSON.stringify(recipe)
       }).then(res => {
-         return res.json();
+         return res.json().then(data => ({ status: res.status, ...data }));
       }).then(data => {
-         setRecipes([...recipes, data.recipe]);
+         console.log(data);
+         
+         if (data.status === 200) { 
+            setRecipes([...recipes, data.recipe]);
+            setShowModal(false);
+         } else {
+            console.log('Validation error.');
+         }
+      }).catch(err => {
+         console.log('There was an error saving the recipe.');
       });
-        
-      setShowModal(false);
    }
 
    const handleClickNewRecipeBtn = () => {
