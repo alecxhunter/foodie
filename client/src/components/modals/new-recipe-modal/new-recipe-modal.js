@@ -114,8 +114,8 @@ export default function NewRecipeModal(props) {
          <AppBar position="static">
             <Tabs variant="fullWidth" value={selectedTabIdx} onChange={handleChangeTab} classes={{indicator: classes.indicator}}>
                <Tab label="Info" />
-               <Tab label="Directions" />
                <Tab label="Ingredients" />
+               <Tab label="Directions" />
             </Tabs>
          </AppBar>
          <TabPanel value={selectedTabIdx} index={0}>
@@ -202,6 +202,14 @@ export default function NewRecipeModal(props) {
             </Grid>
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
+            <IngredientsTab
+               ingredients={recipe.ingredients}
+               handleAddIngredient={handleAddIngredient}
+               handleChangeIngredient={handleChangeIngredient}
+               handleDeleteIngredient={handleDeleteIngredient}
+            />
+         </TabPanel>
+         <TabPanel value={selectedTabIdx} index={2}>
             <EditableList
                className={classes.directionsList}
                values={recipe.directions || []}
@@ -209,14 +217,6 @@ export default function NewRecipeModal(props) {
                handleChangeValue={handleChangeDirection}
                handleAddNewValue={handleAddDirection}
                handleDeleteValue={handleDeleteDirection}
-            />
-         </TabPanel>
-         <TabPanel value={selectedTabIdx} index={2}>
-            <IngredientsTab
-               ingredients={recipe.ingredients}
-               handleAddIngredient={handleAddIngredient}
-               handleChangeIngredient={handleChangeIngredient}
-               handleDeleteIngredient={handleDeleteIngredient}
             />
          </TabPanel>
       </Modal>
