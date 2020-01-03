@@ -34,47 +34,49 @@ export default function EditableList(props) {
    }
 
    return (
-      <List className={props.className}>
-         {(props.values || []).map((value, idx) => {
-            return (
-               <ListItem key={idx}>
-                  {
-                     editStates[idx] ?
-                        <Fragment>
-                           <TextField
-                              label="Edit"
-                              variant="outlined"
-                              fullWidth
-                              multiline
-                              rowsMax={3}
-                              value={value[props.displayProp]}
-                              onChange={props.handleChangeValue(idx)}
-                           />
-                           <ListItemIcon>
-                              <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
-                                 <DoneIcon />
-                              </IconButton>
-                           </ListItemIcon>
-                        </Fragment>
-                        :
-                        <Fragment>
-                           <ListItemIcon>
-                              <IconButton edge="end" onClick={() => handleDeleteValue(idx)}>
-                                 <DeleteIcon />
-                              </IconButton>
-                           </ListItemIcon>
-                           <ListItemText primary={<Typography component="p">{value[props.displayProp]}</Typography>} />
-                           <ListItemIcon>
-                              <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
-                                 <EditIcon />
-                              </IconButton>
-                           </ListItemIcon>
-                        </Fragment>
-                  }
-               </ListItem>
-            )
-         })}
-         <ListItem>
+      <Fragment>
+         <List className={props.className}>
+            {(props.values || []).map((value, idx) => {
+               return (
+                  <ListItem key={idx}>
+                     {
+                        editStates[idx] ?
+                           <Fragment>
+                              <TextField
+                                 label="Edit"
+                                 variant="outlined"
+                                 fullWidth
+                                 multiline
+                                 rowsMax={3}
+                                 value={value[props.displayProp]}
+                                 onChange={props.handleChangeValue(idx)}
+                              />
+                              <ListItemIcon>
+                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
+                                    <DoneIcon />
+                                 </IconButton>
+                              </ListItemIcon>
+                           </Fragment>
+                           :
+                           <Fragment>
+                              <ListItemIcon>
+                                 <IconButton edge="end" onClick={() => handleDeleteValue(idx)}>
+                                    <DeleteIcon />
+                                 </IconButton>
+                              </ListItemIcon>
+                              <ListItemText primary={<Typography component="p">{value[props.displayProp]}</Typography>} />
+                              <ListItemIcon>
+                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
+                                    <EditIcon />
+                                 </IconButton>
+                              </ListItemIcon>
+                           </Fragment>
+                     }
+                  </ListItem>
+               )
+            })}
+         </List>
+         <div style={{display: 'flex'}}>
             <TextField
                label="Next Direction"
                variant="outlined"
@@ -84,12 +86,10 @@ export default function EditableList(props) {
                value={newValue}
                onChange={handleChangeNewValue}
             />
-            <ListItemIcon>
-               <IconButton edge="end" onClick={handleAddNewValue}>
-                  <AddIcon />
-               </IconButton>
-            </ListItemIcon>
-         </ListItem>
-      </List>
+            <IconButton onClick={handleAddNewValue}>
+               <AddIcon />
+            </IconButton>
+         </div>
+      </Fragment>
    )
 }
