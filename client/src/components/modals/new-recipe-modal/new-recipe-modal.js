@@ -56,13 +56,36 @@ export default function NewRecipeModal(props) {
       ingredients: []
    });
    const [selectedTabIdx, setSelectedTab] = useState(0);
+   const [validationErrors, setValidationErrors] = useState({});
 
    const handleChangeRecipeProp = prop => e => {
       setRecipe({ ...recipe, [prop]: e.target.value });
    }
 
    const handleSaveNewRecipe = () => {
-      props.onSave(recipe);
+      //console.log('NewRecipeModal.handleSaveNewRecipe');
+      //console.log(JSON.stringify(recipe, null, 3));
+
+      fetch('http://localhost:5000/recipes', {
+         headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+         },
+         method: 'POST',
+         body: JSON.stringify(recipe)
+      }).then(res => {
+         return res.json().then(data => ({ status: res.status, ...data }));
+      }).then(data => {
+         if (data.status === 200) {
+            props.onSave(data.recipe);
+         } else {
+            console.log('Validation error.');
+            console.log({ ...data.errors })
+            setValidationErrors({ ...data.errors });
+         }
+      }).catch(err => {
+         console.log('There was an error saving the recipe.');
+      });
    }
 
    const handleChangeTab = (e, tab) => {
@@ -130,20 +153,22 @@ export default function NewRecipeModal(props) {
                         variant="outlined"
                         value={recipe.name}
                         onChange={handleChangeRecipeProp('name')}
+                        error={validationErrors.name ? true : false}
+                        helperText={validationErrors.name || ' '}
                      />
-                     <FormHelperText>&nbsp;</FormHelperText>
                   </Grid>
                   <Grid item xs={3}>
                      <TextField
                         key={props.showModal}
-                        label="Prep Time"
+                        label="Prep Time(min)"
                         className={classes.marginRight}
                         type="number"
                         variant="outlined"
                         value={recipe.prepTime}
                         onChange={handleChangeRecipeProp('prepTime')}
+                        error={validationErrors.prepTime ? true : false}
+                        helperText={validationErrors.prepTime || ' '}
                      />
-                     <FormHelperText>Minutes</FormHelperText>
                   </Grid>
                </Grid>
                <Grid container spacing={2} alignItems="center">
@@ -159,20 +184,22 @@ export default function NewRecipeModal(props) {
                         variant="outlined"
                         value={recipe.description}
                         onChange={handleChangeRecipeProp('description')}
+                        error={validationErrors.description ? true : false}
+                        helperText={validationErrors.description || ' '}
                      />
-                     <FormHelperText>&nbsp;</FormHelperText>
                   </Grid>
                   <Grid item xs={3}>
                      <TextField
                         key={props.showModal}
-                        label="Cook Time"
+                        label="Cook Time(min)"
                         className={classes.marginRight}
                         type="number"
                         variant="outlined"
                         value={recipe.cookTime}
                         onChange={handleChangeRecipeProp('cookTime')}
+                        error={validationErrors.cookTime ? true : false}
+                        helperText={validationErrors.cookTime || ' '}
                      />
-                     <FormHelperText id="standard-weight-helper-text">Minutes</FormHelperText>
                   </Grid>
                </Grid>
                <Grid container spacing={2} alignItems="center">
@@ -185,6 +212,8 @@ export default function NewRecipeModal(props) {
                         variant="outlined"
                         value={recipe.imageUrl}
                         onChange={handleChangeRecipeProp('imageUrl')}
+                        error={validationErrors.imageUrl ? true : false}
+                        helperText={validationErrors.imageUrl || ' '}
                      />
                   </Grid>
                   <Grid item xs={3}>
@@ -196,6 +225,8 @@ export default function NewRecipeModal(props) {
                         variant="outlined"
                         value={recipe.servings}
                         onChange={handleChangeRecipeProp('servings')}
+                        error={validationErrors.servings ? true : false}
+                        helperText={validationErrors.servings || ' '}
                      />
                   </Grid>
                </Grid>

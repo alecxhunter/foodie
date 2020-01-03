@@ -31,7 +31,7 @@ export default function Recipes() {
    }
 
    const handleSaveNewRecipe = recipe => {
-      console.log('Recipes.handleSaveNewRecipe');
+      /* console.log('Recipes.handleSaveNewRecipe');
       console.log(JSON.stringify(recipe, null, 3));
 
       fetch('http://localhost:5000/recipes', {
@@ -51,10 +51,14 @@ export default function Recipes() {
             setShowModal(false);
          } else {
             console.log('Validation error.');
+
          }
       }).catch(err => {
          console.log('There was an error saving the recipe.');
-      });
+      }); */
+
+      setRecipes([...recipes, recipe]);
+      setShowModal(false);
    }
 
    const handleClickNewRecipeBtn = () => {

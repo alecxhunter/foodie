@@ -76,7 +76,8 @@ function SearchBar(props) {
 
    return (
       <div className={clsx(props.className, classes.root)}>
-         <TextField variant="standard"
+         <TextField
+            variant="outlined"
             label={props.label ? props.label : 'Search'}
             value={getQuery()}
             onChange={handleChangeQuery}

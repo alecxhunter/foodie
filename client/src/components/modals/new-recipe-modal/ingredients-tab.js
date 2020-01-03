@@ -126,25 +126,27 @@ function IngredientsTab(props) {
                                     valueProperty="id"
                                     label="Ingredient"
                                  />
-                                 <FormControl className={clsx(classes.formControl, classes.margin)}>
-                                    <InputLabel>Measurement</InputLabel>
-                                    <Select
-                                       value={ingr.measurementId}
-                                       onChange={changeIngredientProp(idx, 'measurementId')}
-                                    >
-                                       <MenuItem value={0}>None</MenuItem>
-                                       {
-                                          allIngredientMeasurements.map(ingrMeas => {
-                                             return (
-                                                <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
-                                                   {ingrMeas.description}
-                                                </MenuItem>
-                                             )
-                                          })
-                                       }
-                                    </Select>
-                                 </FormControl>
                                  <TextField
+                                    className={clsx(classes.margin, classes.formControl)}
+                                    variant="outlined"
+                                    lavel="Measurement"
+                                    select
+                                    value={ingr.measurementId}
+                                    onChange={changeIngredientProp(idx, 'measurementId')}
+                                 >
+                                    <MenuItem value={0}>None</MenuItem>
+                                    {
+                                       allIngredientMeasurements.map(ingrMeas => {
+                                          return (
+                                             <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
+                                                {ingrMeas.description}
+                                             </MenuItem>
+                                          )
+                                       })
+                                    }
+                                 </TextField>
+                                 <TextField
+                                    variant="outlined"
                                     label="Amount"
                                     value={ingr.amount}
                                     type="number"
@@ -188,25 +190,27 @@ function IngredientsTab(props) {
                valueProperty="id"
                label="Ingredient"
             />
-            <FormControl className={clsx(classes.formControl, classes.margin)}>
-               <InputLabel>Measurement</InputLabel>
-               <Select
-                  value={nextIngredient.measurementId}
-                  onChange={handleChangeNextIngredientProp('measurementId')}
-               >
-                  <MenuItem value={0}>None</MenuItem>
-                  {
-                     allIngredientMeasurements.map(ingrMeas => {
-                        return (
-                           <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
-                              {ingrMeas.description}
-                           </MenuItem>
-                        )
-                     })
-                  }
-               </Select>
-            </FormControl>
             <TextField
+               className={clsx(classes.margin, classes.formControl)}
+               variant="outlined"
+               label="Measurement"
+               select
+               value={nextIngredient.measurementId}
+               onChange={handleChangeNextIngredientProp('measurementId')}
+            >
+               <MenuItem value={0}>None</MenuItem>
+               {
+                  allIngredientMeasurements.map(ingrMeas => {
+                     return (
+                        <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
+                           {ingrMeas.description}
+                        </MenuItem>
+                     )
+                  })
+               }
+            </TextField>
+            <TextField
+               variant="outlined"
                label="Amount"
                value={nextIngredient.amount}
                type="number"

@@ -38,12 +38,30 @@ class RecipeIngredientSchema(Schema):
 
 class RecipeSchema(Schema):
    id = fields.Int(dump_only=True)
-   name = fields.Str(required=True, validate=not_empty)
+   name = fields.Str(
+      required=True,
+      validate=not_empty
+   )
    description = fields.Str(required=True, validate=not_empty)
-   image_url = fields.Str(required=True, data_key='imageUrl', validate=validate.URL(relative=False))
-   prep_time = fields.Int(required=True, data_key='prepTime', validate=not_empty)
-   cook_time = fields.Int(required=True, data_key='cookTime', validate=not_empty)
-   servings = fields.Int(required=True, validate=not_empty)
+   image_url = fields.Str(
+      required=True,
+      data_key='imageUrl',
+      validate=validate.URL(relative=False)
+   )
+   prep_time = fields.Int(
+      required=True,
+      data_key='prepTime',
+      validate=validate.Range(min=1, error='Must be at least 1')
+   )
+   cook_time = fields.Int(
+      required=True,
+      data_key='cookTime',
+      validate=validate.Range(min=1, error='Must be at least 1')
+   )
+   servings = fields.Int(
+      required=True,
+      validate=validate.Range(min=1, error='Must be at least 1')
+   )
 
    directions = fields.Nested(RecipeDirectionSchema(many=True), required=True, validate=validate.Length(min=1))
    ingredients = fields.Nested(RecipeIngredientSchema(many=True), required=True, validate=validate.Length(min=1))

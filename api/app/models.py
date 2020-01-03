@@ -34,7 +34,7 @@ class Recipe(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    name = db.Column(db.String(200), index=True, nullable=False)
    description = db.Column(db.String(2000), nullable=False)
-   image_url = db.Column(db.String(200), nullable=False)
+   image_url = db.Column(db.String(500), nullable=False)
    prep_time = db.Column(db.Integer, nullable=False)
    cook_time = db.Column(db.Integer, nullable=False)
    servings = db.Column(db.Integer, nullable=False)
