@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Modal from '../modal';
@@ -243,6 +243,7 @@ export default function NewRecipeModal(props) {
                handleChangeValue={handleChangeDirection}
                handleAddNewValue={handleAddDirection}
                handleDeleteValue={handleDeleteDirection}
+               errors={validationErrors.directions && !Array.isArray(validationErrors.directions) ? validationErrors.directions : {}}
             />
          </TabPanel>
       </Modal>

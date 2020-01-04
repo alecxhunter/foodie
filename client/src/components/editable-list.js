@@ -38,41 +38,49 @@ export default function EditableList(props) {
          <List className={props.className}>
             {(props.values || []).map((value, idx) => {
                return (
-                  <ListItem key={idx}>
+                  <Fragment key={idx}>
+                     <ListItem>
+                        {
+                           editStates[idx] ?
+                              <Fragment>
+                                 <TextField
+                                    label="Edit"
+                                    variant="outlined"
+                                    fullWidth
+                                    multiline
+                                    rowsMax={3}
+                                    value={value[props.displayProp]}
+                                    onChange={props.handleChangeValue(idx)}
+                                 />
+                                 <ListItemIcon>
+                                    <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
+                                       <DoneIcon />
+                                    </IconButton>
+                                 </ListItemIcon>
+                              </Fragment>
+                              :
+                              <Fragment>
+                                 <ListItemIcon>
+                                    <IconButton edge="end" onClick={() => handleDeleteValue(idx)}>
+                                       <DeleteIcon />
+                                    </IconButton>
+                                 </ListItemIcon>
+                                 <ListItemText primary={<Typography component="p">{value[props.displayProp]}</Typography>} />
+                                 <ListItemIcon>
+                                    <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
+                                       <EditIcon />
+                                    </IconButton>
+                                 </ListItemIcon>
+                              </Fragment>
+                        }
+                     </ListItem>
                      {
-                        editStates[idx] ?
-                           <Fragment>
-                              <TextField
-                                 label="Edit"
-                                 variant="outlined"
-                                 fullWidth
-                                 multiline
-                                 rowsMax={3}
-                                 value={value[props.displayProp]}
-                                 onChange={props.handleChangeValue(idx)}
-                              />
-                              <ListItemIcon>
-                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
-                                    <DoneIcon />
-                                 </IconButton>
-                              </ListItemIcon>
-                           </Fragment>
-                           :
-                           <Fragment>
-                              <ListItemIcon>
-                                 <IconButton edge="end" onClick={() => handleDeleteValue(idx)}>
-                                    <DeleteIcon />
-                                 </IconButton>
-                              </ListItemIcon>
-                              <ListItemText primary={<Typography component="p">{value[props.displayProp]}</Typography>} />
-                              <ListItemIcon>
-                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
-                                    <EditIcon />
-                                 </IconButton>
-                              </ListItemIcon>
-                           </Fragment>
+                        props.errors[idx] &&
+                        <ListItem>
+                           <Typography variant="caption" color="error">{props.errors[idx].text.join('. ')}</Typography>
+                        </ListItem>
                      }
-                  </ListItem>
+                  </Fragment>
                )
             })}
          </List>
