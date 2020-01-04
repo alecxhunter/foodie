@@ -13,8 +13,9 @@ const useStyles = makeStyles(theme => ({
    formControl: {
       minWidth: 140
    },
-   margin: {
-      margin: theme.spacing(1)
+   gutters: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1)
    },
    fullWidth: {
       width: '100%'
@@ -117,7 +118,7 @@ function IngredientsTab(props) {
                            editStates[idx] ?
                               <Fragment>
                                  <SearchBar
-                                    className={clsx(classes.margin, classes.fullWidth)}
+                                    className={clsx(classes.gutters, classes.fullWidth)}
                                     data={allIngredients}
                                     selectedValue={ingr.ingredientId}
                                     onChange={changeIngredientProp(idx, 'ingredientId')}
@@ -127,7 +128,7 @@ function IngredientsTab(props) {
                                     label="Ingredient"
                                  />
                                  <TextField
-                                    className={clsx(classes.margin, classes.formControl)}
+                                    className={clsx(classes.gutters, classes.formControl)}
                                     variant="outlined"
                                     lavel="Measurement"
                                     select
@@ -151,7 +152,7 @@ function IngredientsTab(props) {
                                     value={ingr.amount}
                                     type="number"
                                     onChange={changeIngredientProp(idx, 'amount')}
-                                    className={classes.margin}
+                                    className={classes.gutters}
                                  />
                                  <ListItemIcon>
                                     <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
@@ -181,7 +182,7 @@ function IngredientsTab(props) {
          </List>
          <div style={{display: 'flex'}}>
             <SearchBar
-               className={clsx(classes.margin, classes.fullWidth)}
+               className={clsx(classes.gutters, classes.fullWidth)}
                data={allIngredients}
                selectedValue={nextIngredient.ingredientId}
                onChange={handleChangeNextIngredientProp('ingredientId')}
@@ -191,7 +192,7 @@ function IngredientsTab(props) {
                label="Ingredient"
             />
             <TextField
-               className={clsx(classes.margin, classes.formControl)}
+               className={clsx(classes.gutters, classes.formControl)}
                variant="outlined"
                label="Measurement"
                select
@@ -215,7 +216,7 @@ function IngredientsTab(props) {
                value={nextIngredient.amount}
                type="number"
                onChange={handleChangeNextIngredientProp('amount')}
-               className={classes.margin}
+               className={classes.gutters}
             />
             <IconButton onClick={addIngredient}>
                <AddIcon />

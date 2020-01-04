@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
       display: 'none'
    },
    modal: {
-      width: '560px',
+      width: 640,
       margin: '0 auto',
       background: '#eee',
       position: 'relative',

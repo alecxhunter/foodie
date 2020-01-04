@@ -7,31 +7,17 @@ import { AppBar, Tab, Tabs, Box, TextField, Grid, FormHelperText, Typography } f
 import { makeStyles } from '@material-ui/core/styles';
 import IngredientsTab from './ingredients-tab';
 
-function TabPanel(props) {
-   const { children, value, index } = props;
-
-   return (
-      <Typography
-         component="div"
-         hidden={value !== index}
-      >
-         {value === index && <Box p={1}>{children}</Box>}
-      </Typography>
-   );
-}
-
-TabPanel.propTypes = {
-   children: PropTypes.node,
-   index: PropTypes.any.isRequired,
-   value: PropTypes.any.isRequired,
-};
-
 const useStyles = makeStyles(theme => ({
-   margin: {
-      margin: theme.spacing(1),
-   },
-   marginRight: {
+   gutters: {
+      marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1)
+   },
+   padding: {
+      padding: theme.spacing(1)
+   },
+   input: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1)
    },
    indicator: {
       background: theme.palette.primary.dark,
@@ -42,6 +28,26 @@ const useStyles = makeStyles(theme => ({
       overflowY: 'auto'
    }
 }));
+
+function TabPanel(props) {
+   const classes = useStyles();
+   const { children, value, index } = props;
+
+   return (
+      <Typography
+         component="div"
+         hidden={value !== index}
+      >
+         {value === index && <Box p={1} /* className={classes.padding} */>{children}</Box>}
+      </Typography>
+   );
+}
+
+TabPanel.propTypes = {
+   children: PropTypes.node,
+   index: PropTypes.any.isRequired,
+   value: PropTypes.any.isRequired,
+};
 
 export default function NewRecipeModal(props) {
    const classes = useStyles();
@@ -142,13 +148,92 @@ export default function NewRecipeModal(props) {
             </Tabs>
          </AppBar>
          <TabPanel value={selectedTabIdx} index={0}>
+            <TextField
+               key={props.showModal ? 0 : 10}
+               className={classes.input}
+               label="Recipe Name"
+               fullWidth
+               variant="outlined"
+               value={recipe.name}
+               onChange={handleChangeRecipeProp('name')}
+               error={validationErrors.name ? true : false}
+               helperText={validationErrors.name || ' '}
+            />
+            <TextField
+               key={props.showModal ? 1 : 11}
+               className={classes.input}
+               label="Description"
+               multiline
+               fullWidth
+               rows="1"
+               rowsMax="3"
+               variant="outlined"
+               value={recipe.description}
+               onChange={handleChangeRecipeProp('description')}
+               error={validationErrors.description ? true : false}
+               helperText={validationErrors.description || ' '}
+            />
+            <TextField
+               key={props.showModal ? 2 : 12}
+               className={classes.input}
+               label="Banner Image URL"
+               fullWidth
+               variant="outlined"
+               value={recipe.imageUrl}
+               onChange={handleChangeRecipeProp('imageUrl')}
+               error={validationErrors.imageUrl ? true : false}
+               helperText={validationErrors.imageUrl || ' '}
+            />
+            <Grid container spacing={2}>
+               <Grid item xs={4}>
+                  <TextField
+                     key={props.showModal ? 3 : 13}
+                     className={classes.input}
+                     label="Prep Time(min)"
+                     type="number"
+                     variant="outlined"
+                     value={recipe.prepTime}
+                     onChange={handleChangeRecipeProp('prepTime')}
+                     error={validationErrors.prepTime ? true : false}
+                     helperText={validationErrors.prepTime || ' '}
+                  />
+               </Grid>
+               <Grid item xs={4}>
+                  <TextField
+                     key={props.showModal ? 4 : 14}
+                     className={classes.input}
+                     label="Cook Time(min)"
+                     type="number"
+                     variant="outlined"
+                     value={recipe.cookTime}
+                     onChange={handleChangeRecipeProp('cookTime')}
+                     error={validationErrors.cookTime ? true : false}
+                     helperText={validationErrors.cookTime || ' '}
+                  />
+               </Grid>
+               <Grid item xs={4}>
+                  <TextField
+                     key={props.showModal ? 5 : 15}
+                     className={classes.input}
+                     label="Servings"
+                     type="number"
+                     variant="outlined"
+                     value={recipe.servings}
+                     onChange={handleChangeRecipeProp('servings')}
+                     error={validationErrors.servings ? true : false}
+                     helperText={validationErrors.servings || ' '}
+                  />
+               </Grid>
+            </Grid>
+         </TabPanel>
+         {/* <TabPanel value={selectedTabIdx} index={3}>
             <Grid container spacing={1}>
                <Grid container spacing={2} alignItems="center">
                   <Grid item xs={9}>
                      <TextField
                         key={props.showModal}
                         label="Recipe Name"
-                        className={classes.margin}
+                        className={classes.gutters}
                         fullWidth
                         variant="outlined"
                         value={recipe.name}
@@ -161,7 +246,7 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Prep Time(min)"
-                        className={classes.marginRight}
+                        className={classes.gutters}
                         type="number"
                         variant="outlined"
                         value={recipe.prepTime}
@@ -176,7 +261,7 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Description"
-                        className={classes.margin}
+                        className={classes.gutters}
                         multiline
                         fullWidth
                         rows="1"
@@ -192,7 +277,7 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Cook Time(min)"
-                        className={classes.marginRight}
+                        className={classes.gutters}
                         type="number"
                         variant="outlined"
                         value={recipe.cookTime}
@@ -207,7 +292,7 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Banner Image URL"
-                        className={classes.margin}
+                        className={classes.gutters}
                         fullWidth
                         variant="outlined"
                         value={recipe.imageUrl}
@@ -220,7 +305,7 @@ export default function NewRecipeModal(props) {
                      <TextField
                         key={props.showModal}
                         label="Servings"
-                        className={classes.marginRight}
+                        className={classes.gutters}
                         type="number"
                         variant="outlined"
                         value={recipe.servings}
@@ -231,7 +316,7 @@ export default function NewRecipeModal(props) {
                   </Grid>
                </Grid>
             </Grid>
-         </TabPanel>
+         </TabPanel> */}
          <TabPanel value={selectedTabIdx} index={1}>
             <IngredientsTab
                ingredients={recipe.ingredients}
