@@ -63,5 +63,5 @@ class RecipeSchema(Schema):
       validate=validate.Range(min=1, error='Must be at least 1')
    )
 
-   directions = fields.Nested(RecipeDirectionSchema(many=True), required=True, validate=validate.Length(min=1))
-   ingredients = fields.Nested(RecipeIngredientSchema(many=True), required=True, validate=validate.Length(min=1))
+   directions = fields.Nested(RecipeDirectionSchema(many=True), required=True, validate=validate.Length(min=1, error='Must have at least one direction'))
+   ingredients = fields.Nested(RecipeIngredientSchema(many=True), required=True, validate=validate.Length(min=1, error='Must have at least one ingredient'))

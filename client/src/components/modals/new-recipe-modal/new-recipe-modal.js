@@ -226,97 +226,6 @@ export default function NewRecipeModal(props) {
                </Grid>
             </Grid>
          </TabPanel>
-         {/* <TabPanel value={selectedTabIdx} index={3}>
-            <Grid container spacing={1}>
-               <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={9}>
-                     <TextField
-                        key={props.showModal}
-                        label="Recipe Name"
-                        className={classes.gutters}
-                        fullWidth
-                        variant="outlined"
-                        value={recipe.name}
-                        onChange={handleChangeRecipeProp('name')}
-                        error={validationErrors.name ? true : false}
-                        helperText={validationErrors.name || ' '}
-                     />
-                  </Grid>
-                  <Grid item xs={3}>
-                     <TextField
-                        key={props.showModal}
-                        label="Prep Time(min)"
-                        className={classes.gutters}
-                        type="number"
-                        variant="outlined"
-                        value={recipe.prepTime}
-                        onChange={handleChangeRecipeProp('prepTime')}
-                        error={validationErrors.prepTime ? true : false}
-                        helperText={validationErrors.prepTime || ' '}
-                     />
-                  </Grid>
-               </Grid>
-               <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={9}>
-                     <TextField
-                        key={props.showModal}
-                        label="Description"
-                        className={classes.gutters}
-                        multiline
-                        fullWidth
-                        rows="1"
-                        rowsMax="3"
-                        variant="outlined"
-                        value={recipe.description}
-                        onChange={handleChangeRecipeProp('description')}
-                        error={validationErrors.description ? true : false}
-                        helperText={validationErrors.description || ' '}
-                     />
-                  </Grid>
-                  <Grid item xs={3}>
-                     <TextField
-                        key={props.showModal}
-                        label="Cook Time(min)"
-                        className={classes.gutters}
-                        type="number"
-                        variant="outlined"
-                        value={recipe.cookTime}
-                        onChange={handleChangeRecipeProp('cookTime')}
-                        error={validationErrors.cookTime ? true : false}
-                        helperText={validationErrors.cookTime || ' '}
-                     />
-                  </Grid>
-               </Grid>
-               <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={9}>
-                     <TextField
-                        key={props.showModal}
-                        label="Banner Image URL"
-                        className={classes.gutters}
-                        fullWidth
-                        variant="outlined"
-                        value={recipe.imageUrl}
-                        onChange={handleChangeRecipeProp('imageUrl')}
-                        error={validationErrors.imageUrl ? true : false}
-                        helperText={validationErrors.imageUrl || ' '}
-                     />
-                  </Grid>
-                  <Grid item xs={3}>
-                     <TextField
-                        key={props.showModal}
-                        label="Servings"
-                        className={classes.gutters}
-                        type="number"
-                        variant="outlined"
-                        value={recipe.servings}
-                        onChange={handleChangeRecipeProp('servings')}
-                        error={validationErrors.servings ? true : false}
-                        helperText={validationErrors.servings || ' '}
-                     />
-                  </Grid>
-               </Grid>
-            </Grid>
-         </TabPanel> */}
          <TabPanel value={selectedTabIdx} index={1}>
             <IngredientsTab
                ingredients={recipe.ingredients}
@@ -326,6 +235,7 @@ export default function NewRecipeModal(props) {
             />
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={2}>
+            {Array.isArray(validationErrors.directions) && <Typography color="error" align="center" variant="body2">{validationErrors.directions}</Typography>}
             <EditableList
                className={classes.directionsList}
                values={recipe.directions || []}
