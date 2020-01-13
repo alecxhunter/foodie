@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { List, ListItem, ListItemText, ListItemIcon, TextField, IconButton, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,7 +8,6 @@ import AddIcon from '@material-ui/icons/Add';
 export default function EditableList(props) {
    const [editStates, setEditStates] = useState(Array(props.values.length).fill(false));
    const [newValue, setNewValue] = useState('');
-   const nextValueRef = useRef(null);
 
    const handleChangeEditState = (idx, val) => {
       let states = [...editStates];

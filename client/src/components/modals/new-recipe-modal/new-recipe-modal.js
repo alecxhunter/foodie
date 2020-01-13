@@ -232,6 +232,7 @@ export default function NewRecipeModal(props) {
                handleAddIngredient={handleAddIngredient}
                handleChangeIngredient={handleChangeIngredient}
                handleDeleteIngredient={handleDeleteIngredient}
+               errors={validationErrors.ingredients && !Array.isArray(validationErrors.ingredients) ? validationErrors.ingredients : {}}
             />
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={2}>

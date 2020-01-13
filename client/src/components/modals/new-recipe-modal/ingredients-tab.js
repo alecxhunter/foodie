@@ -113,69 +113,77 @@ function IngredientsTab(props) {
             {
                props.ingredients.map((ingr, idx) => {
                   return (
-                     <ListItem key={idx} disableGutters>
+                     <Fragment key={idx}>
+                        <ListItem disableGutters>
+                           {
+                              editStates[idx] ?
+                                 <Fragment>
+                                    <SearchBar
+                                       className={clsx(classes.gutters, classes.fullWidth)}
+                                       data={allIngredients}
+                                       selectedValue={ingr.ingredientId}
+                                       onChange={changeIngredientProp(idx, 'ingredientId')}
+                                       searchProperty="name"
+                                       displayProperty="name"
+                                       valueProperty="id"
+                                       label="Ingredient"
+                                    />
+                                    <TextField
+                                       className={clsx(classes.gutters, classes.formControl)}
+                                       variant="outlined"
+                                       lavel="Measurement"
+                                       select
+                                       value={ingr.measurementId}
+                                       onChange={changeIngredientProp(idx, 'measurementId')}
+                                    >
+                                       <MenuItem value={0}>None</MenuItem>
+                                       {
+                                          allIngredientMeasurements.map(ingrMeas => {
+                                             return (
+                                                <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
+                                                   {ingrMeas.description}
+                                                </MenuItem>
+                                             )
+                                          })
+                                       }
+                                    </TextField>
+                                    <TextField
+                                       variant="outlined"
+                                       label="Amount"
+                                       value={ingr.amount}
+                                       type="number"
+                                       onChange={changeIngredientProp(idx, 'amount')}
+                                       className={classes.gutters}
+                                    />
+                                    <ListItemIcon>
+                                       <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
+                                          <DoneIcon />
+                                       </IconButton>
+                                    </ListItemIcon>
+                                 </Fragment>
+                                 :
+                                 <Fragment>
+                                    <ListItemIcon>
+                                       <IconButton edge="end" onClick={() => deleteIngredient(idx)}>
+                                          <DeleteIcon />
+                                       </IconButton>
+                                    </ListItemIcon>
+                                    <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
+                                    <ListItemIcon>
+                                       <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
+                                          <EditIcon />
+                                       </IconButton>
+                                    </ListItemIcon>
+                                 </Fragment>
+                           }
+                        </ListItem>
                         {
-                           editStates[idx] ?
-                              <Fragment>
-                                 <SearchBar
-                                    className={clsx(classes.gutters, classes.fullWidth)}
-                                    data={allIngredients}
-                                    selectedValue={ingr.ingredientId}
-                                    onChange={changeIngredientProp(idx, 'ingredientId')}
-                                    searchProperty="name"
-                                    displayProperty="name"
-                                    valueProperty="id"
-                                    label="Ingredient"
-                                 />
-                                 <TextField
-                                    className={clsx(classes.gutters, classes.formControl)}
-                                    variant="outlined"
-                                    lavel="Measurement"
-                                    select
-                                    value={ingr.measurementId}
-                                    onChange={changeIngredientProp(idx, 'measurementId')}
-                                 >
-                                    <MenuItem value={0}>None</MenuItem>
-                                    {
-                                       allIngredientMeasurements.map(ingrMeas => {
-                                          return (
-                                             <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
-                                                {ingrMeas.description}
-                                             </MenuItem>
-                                          )
-                                       })
-                                    }
-                                 </TextField>
-                                 <TextField
-                                    variant="outlined"
-                                    label="Amount"
-                                    value={ingr.amount}
-                                    type="number"
-                                    onChange={changeIngredientProp(idx, 'amount')}
-                                    className={classes.gutters}
-                                 />
-                                 <ListItemIcon>
-                                    <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
-                                       <DoneIcon />
-                                    </IconButton>
-                                 </ListItemIcon>
-                              </Fragment>
-                              :
-                              <Fragment>
-                                 <ListItemIcon>
-                                    <IconButton edge="end" onClick={() => deleteIngredient(idx)}>
-                                       <DeleteIcon />
-                                    </IconButton>
-                                 </ListItemIcon>
-                                 <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
-                                 <ListItemIcon>
-                                    <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
-                                       <EditIcon />
-                                    </IconButton>
-                                 </ListItemIcon>
-                              </Fragment>
-                        }
-                     </ListItem>
+                           props.errors[idx] &&
+                           <ListItem>
+                              <Typography variant="caption" color="error">{props.errors[idx].text.join('. ')}</Typography>
+                           </ListItem>
+                        }   
+                     </Fragment>
                   );
                })
             }

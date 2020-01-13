@@ -8,13 +8,13 @@ def not_empty(data):
 
 class IngredientMeasurementSchema(Schema):
    id = fields.Int(dump_only=True)
-   measurement = fields.Str(required=True)
-   description = fields.Str(required=True)
+   measurement = fields.Str(required=True, validate=not_empty)
+   description = fields.Str(required=True, validate=not_empty)
 
 
 class IngredientSchema(Schema):
    id = fields.Int(dump_only=True)
-   name = fields.Str(required=True)
+   name = fields.Str(required=True, validate=not_empty)
    default_measurement = fields.Nested(IngredientMeasurementSchema)
 
 
