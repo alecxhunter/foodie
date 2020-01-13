@@ -65,7 +65,7 @@ class RecipeIngredient(db.Model):
    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), nullable=False)
    amount = db.Column(db.Integer, nullable=False)
-   measurement_id = db.Column(db.Integer, db.ForeignKey('ingredient_measurements.id'), nullable=False)
+   measurement_id = db.Column(db.Integer, db.ForeignKey('ingredient_measurements.id'))
 
    def __repr__(self):
       return f'<RecipeIngredient recipe_id: {self.recipe_id} ingredient_id: {self.ingredient_id} amount: {self.amount}>'
