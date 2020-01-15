@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Grid, List, ListItem, ListItemIcon, InputLabel, FormControl, Select, MenuItem, IconButton, TextField, ListItemText, Typography } from '@material-ui/core';
+import { Grid, List, ListItem, ListItemIcon, InputLabel, FormControl, Select, MenuItem, IconButton, TextField, ListItemText, Typography, FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import DoneIcon from '@material-ui/icons/Done';
@@ -23,6 +23,12 @@ const useStyles = makeStyles(theme => ({
    ingredientsList: {
       maxHeight: 400,
       overflowY: 'auto'
+   },
+   listItem: {
+      alignItems: 'start'
+   },
+   helperText: {
+      margin: '8px 8px 0'
    }
 }));
 
@@ -111,81 +117,74 @@ function IngredientsTab(props) {
       <Fragment>
          <List className={classes.ingredientsList}>
             {
-               props.ingredients.map((ingr, idx) => {
-                  return (
-                     <Fragment key={idx}>
-                        <ListItem disableGutters>
-                           {
-                              editStates[idx] ?
-                                 <Fragment>
-                                    <SearchBar
-                                       className={clsx(classes.gutters, classes.fullWidth)}
-                                       data={allIngredients}
-                                       selectedValue={ingr.ingredientId}
-                                       onChange={changeIngredientProp(idx, 'ingredientId')}
-                                       searchProperty="name"
-                                       displayProperty="name"
-                                       valueProperty="id"
-                                       label="Ingredient"
-                                    />
-                                    <TextField
-                                       className={clsx(classes.gutters, classes.formControl)}
-                                       variant="outlined"
-                                       lavel="Measurement"
-                                       select
-                                       value={ingr.measurementId}
-                                       onChange={changeIngredientProp(idx, 'measurementId')}
-                                    >
-                                       <MenuItem value={0}>None</MenuItem>
-                                       {
-                                          allIngredientMeasurements.map(ingrMeas => {
-                                             return (
-                                                <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
-                                                   {ingrMeas.description}
-                                                </MenuItem>
-                                             )
-                                          })
-                                       }
-                                    </TextField>
-                                    <TextField
-                                       variant="outlined"
-                                       label="Amount"
-                                       value={ingr.amount}
-                                       type="number"
-                                       onChange={changeIngredientProp(idx, 'amount')}
-                                       className={classes.gutters}
-                                    />
-                                    <ListItemIcon>
-                                       <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
-                                          <DoneIcon />
-                                       </IconButton>
-                                    </ListItemIcon>
-                                 </Fragment>
-                                 :
-                                 <Fragment>
-                                    <ListItemIcon>
-                                       <IconButton edge="end" onClick={() => deleteIngredient(idx)}>
-                                          <DeleteIcon />
-                                       </IconButton>
-                                    </ListItemIcon>
-                                    <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
-                                    <ListItemIcon>
-                                       <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
-                                          <EditIcon />
-                                       </IconButton>
-                                    </ListItemIcon>
-                                 </Fragment>
-                           }
-                        </ListItem>
-                        {
-                           props.errors[idx] &&
-                           <ListItem>
-                              <Typography variant="caption" color="error">{props.errors[idx].text.join('. ')}</Typography>
+               props.ingredients.map((ingr, idx) =>
+                  <Fragment>
+                     {
+                        editStates[idx] ?
+                           <ListItem key={idx} disableGutters className={classes.listItem}>
+                              <SearchBar
+                                 className={clsx(classes.gutters, classes.fullWidth)}
+                                 data={allIngredients}
+                                 selectedValue={ingr.ingredientId}
+                                 onChange={changeIngredientProp(idx, 'ingredientId')}
+                                 searchProperty="name"
+                                 displayProperty="name"
+                                 valueProperty="id"
+                                 label="Ingredient"
+                              />
+                              <TextField
+                                 className={clsx(classes.gutters, classes.formControl)}
+                                 variant="outlined"
+                                 lavel="Measurement"
+                                 select
+                                 value={ingr.measurementId}
+                                 onChange={changeIngredientProp(idx, 'measurementId')}
+                              >
+                                 <MenuItem value={0}>None</MenuItem>
+                                 {
+                                    allIngredientMeasurements.map(ingrMeas => {
+                                       return (
+                                          <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
+                                             {ingrMeas.description}
+                                          </MenuItem>
+                                       )
+                                    })
+                                 }
+                              </TextField>
+                              <TextField
+                                 variant="outlined"
+                                 label="Amount"
+                                 value={ingr.amount}
+                                 type="number"
+                                 onChange={changeIngredientProp(idx, 'amount')}
+                                 className={classes.gutters}
+                                 error={props.errors[idx] && props.errors[idx].amount ? true : false}
+                                 helperText={props.errors[idx] && props.errors[idx].amount ? props.errors[idx].amount.join('. ') : ''}
+                                 FormHelperTextProps={{ classes: { root: classes.helperText }}}
+                              />
+                              <ListItemIcon>
+                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
+                                    <DoneIcon />
+                                 </IconButton>
+                              </ListItemIcon>
                            </ListItem>
-                        }   
-                     </Fragment>
-                  );
-               })
+                           :
+                           <ListItem key={idx} disableGutters>
+                              <ListItemIcon>
+                                 <IconButton edge="end" onClick={() => deleteIngredient(idx)}>
+                                    <DeleteIcon />
+                                 </IconButton>
+                              </ListItemIcon>
+                              <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
+                              <ListItemIcon>
+                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
+                                    <EditIcon />
+                                 </IconButton>
+                              </ListItemIcon>
+                           </ListItem>
+                     }
+                  </Fragment>
+               )
             }
          </List>
          <div style={{display: 'flex'}}>

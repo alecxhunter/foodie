@@ -28,8 +28,18 @@ class RecipeDirectionSchema(Schema):
 class RecipeIngredientSchema(Schema):
    id = fields.Int(dump_only=True)
    recipe_id = fields.Int(data_key='recipeId')
-   amount = fields.Int(required=True, validate=not_empty)
-   ingredient_id = fields.Int(required=True, data_key='ingredientId')
+   amount = fields.Int(
+      required=True
+      , validate=[
+         not_empty
+         , validate.Range(min=0, min_inclusive=False, error='Must be greater than 0')
+      ]
+   )
+   ingredient_id = fields.Int(
+      required=True
+      , data_key='ingredientId'
+      , validate=validate.Range(min=1, error='Invalid ingredient')
+   )
    measurement_id = fields.Int(required=True, data_key='measurementId')
 
    ingredient = fields.Nested(IngredientSchema)

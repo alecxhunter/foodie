@@ -69,8 +69,8 @@ export default function NewRecipeModal(props) {
    }
 
    const handleSaveNewRecipe = () => {
-      //console.log('NewRecipeModal.handleSaveNewRecipe');
-      //console.log(JSON.stringify(recipe, null, 3));
+      console.log('NewRecipeModal.handleSaveNewRecipe');
+      console.log(JSON.stringify(recipe, null, 3));
 
       fetch('http://localhost:5000/recipes', {
          headers: {
