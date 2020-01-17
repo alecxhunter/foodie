@@ -6,7 +6,6 @@ const formatIngredient = ingredient => {
 }
 
 export default function RecipeDetails(props) {
-   console.log(props.recipe.ingredients);
    return (
       <div className="recipe-details">
          <Grid container spacing={4}>
