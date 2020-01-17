@@ -65,6 +65,11 @@ export default function RecipeCard(props) {
             <Typography variant="h4" gutterBottom>{props.recipe.name}</Typography>
             <Typography component="p" className={classes.bottomGutter}>{props.recipe.description}</Typography>
          </CardContent>
+         <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+               <RecipeDetails recipe={props.recipe} />
+            </CardContent>
+         </Collapse>
          <CardActions className={classes.noPadding}>
             <IconButton
                className={clsx(classes.expand, {
@@ -76,11 +81,6 @@ export default function RecipeCard(props) {
                <ExpandMoreIcon />
             </IconButton>
          </CardActions>
-         <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-               <RecipeDetails recipe={props.recipe} />
-            </CardContent>
-         </Collapse>
       </Card>
    )
 }
