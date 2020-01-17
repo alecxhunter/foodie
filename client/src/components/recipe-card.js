@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { Card, CardActions, CardMedia, CardContent, Typography, IconButton, Collapse } from '@material-ui/core';
+import { Button, Card, CardActions, CardMedia, CardContent, Typography, Collapse } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 import RecipeDetails from './recipe-details';
@@ -8,7 +8,6 @@ import RecipeDetails from './recipe-details';
 const useStyles = makeStyles(theme => ({
    expand: {
       transform: 'rotate(0deg)',
-      marginLeft: 'auto',
       transition: theme.transitions.create('transform', {
          duration: theme.transitions.duration.shortest,
       }),
@@ -71,15 +70,15 @@ export default function RecipeCard(props) {
             </CardContent>
          </Collapse>
          <CardActions className={classes.noPadding}>
-            <IconButton
-               className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded,
-               })}
+            <Button
                onClick={handleClickExpand}
-               aria-expanded={expanded}
-               aria-label="show more">
-               <ExpandMoreIcon />
-            </IconButton>
+               size="large"
+               fullWidth
+            >
+               <ExpandMoreIcon className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded
+               })} />
+            </Button>
          </CardActions>
       </Card>
    )
