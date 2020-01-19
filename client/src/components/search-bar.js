@@ -29,6 +29,9 @@ const useStyles = makeStyles(theme => ({
       '& li:hover': {
          background: '#ddd'
       }
+   },
+   helperText: {
+      margin: '8px 8px 0'
    }
 }));
 
@@ -83,6 +86,9 @@ function SearchBar(props) {
             onChange={handleChangeQuery}
             onBlur={handleQueryBlur}
             fullWidth
+            error={props.errors ? true : false}
+            helperText={props.errors || ''}
+            FormHelperTextProps={{ classes: { root: classes.helperText }}}
          />
          <ul className={clsx(classes.searchResults, {
             [classes.hide]: !showSearchResults || getFilteredData().length === 0

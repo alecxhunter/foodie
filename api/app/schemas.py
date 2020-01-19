@@ -30,10 +30,7 @@ class RecipeIngredientSchema(Schema):
    recipe_id = fields.Int(data_key='recipeId')
    amount = fields.Int(
       required=True
-      , validate=[
-         not_empty
-         , validate.Range(min=0, min_inclusive=False, error='Must be greater than 0')
-      ]
+      , validate=validate.Range(min=0, min_inclusive=False, error='Must be greater than 0')
    )
    ingredient_id = fields.Int(
       required=True

@@ -227,6 +227,7 @@ export default function NewRecipeModal(props) {
             </Grid>
          </TabPanel>
          <TabPanel value={selectedTabIdx} index={1}>
+         {Array.isArray(validationErrors.ingredients) && <Typography color="error" align="center" variant="body2">{validationErrors.ingredients}</Typography>}
             <IngredientsTab
                ingredients={recipe.ingredients}
                handleAddIngredient={handleAddIngredient}

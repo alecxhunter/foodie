@@ -48,7 +48,7 @@ def create_app(config_name):
          json_data = request.get_json()
          if not json_data:
             return jsonify({'message': 'No data provided!'}), 400
-         
+
          try:
             data = recipe_schema.load(json_data)
          except ValidationError as err:

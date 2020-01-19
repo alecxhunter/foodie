@@ -118,71 +118,72 @@ function IngredientsTab(props) {
          <List className={classes.ingredientsList}>
             {
                props.ingredients.map((ingr, idx) =>
-                  <Fragment>
-                     {
-                        editStates[idx] ?
-                           <ListItem key={idx} disableGutters className={classes.listItem}>
-                              <SearchBar
-                                 className={clsx(classes.gutters, classes.fullWidth)}
-                                 data={allIngredients}
-                                 selectedValue={ingr.ingredientId}
-                                 onChange={changeIngredientProp(idx, 'ingredientId')}
-                                 searchProperty="name"
-                                 displayProperty="name"
-                                 valueProperty="id"
-                                 label="Ingredient"
-                              />
-                              <TextField
-                                 className={clsx(classes.gutters, classes.formControl)}
-                                 variant="outlined"
-                                 lavel="Measurement"
-                                 select
-                                 value={ingr.measurementId}
-                                 onChange={changeIngredientProp(idx, 'measurementId')}
-                              >
-                                 <MenuItem value={0}>None</MenuItem>
-                                 {
-                                    allIngredientMeasurements.map(ingrMeas => {
-                                       return (
-                                          <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
-                                             {ingrMeas.description}
-                                          </MenuItem>
-                                       )
-                                    })
-                                 }
-                              </TextField>
-                              <TextField
-                                 variant="outlined"
-                                 label="Amount"
-                                 value={ingr.amount}
-                                 type="number"
-                                 onChange={changeIngredientProp(idx, 'amount')}
-                                 className={classes.gutters}
-                                 error={props.errors[idx] && props.errors[idx].amount ? true : false}
-                                 helperText={props.errors[idx] && props.errors[idx].amount ? props.errors[idx].amount.join('. ') : ''}
-                                 FormHelperTextProps={{ classes: { root: classes.helperText }}}
-                              />
-                              <ListItemIcon>
-                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
-                                    <DoneIcon />
-                                 </IconButton>
-                              </ListItemIcon>
-                           </ListItem>
-                           :
-                           <ListItem key={idx} disableGutters>
-                              <ListItemIcon>
-                                 <IconButton edge="end" onClick={() => deleteIngredient(idx)}>
-                                    <DeleteIcon />
-                                 </IconButton>
-                              </ListItemIcon>
-                              <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
-                              <ListItemIcon>
-                                 <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
-                                    <EditIcon />
-                                 </IconButton>
-                              </ListItemIcon>
-                           </ListItem>
-                     }
+                  <Fragment key={idx}>
+                  {
+                     editStates[idx] ?
+                        <ListItem key={idx} disableGutters className={classes.listItem}>
+                           <SearchBar
+                              className={clsx(classes.gutters, classes.fullWidth)}
+                              data={allIngredients}
+                              selectedValue={ingr.ingredientId}
+                              onChange={changeIngredientProp(idx, 'ingredientId')}
+                              searchProperty="name"
+                              displayProperty="name"
+                              valueProperty="id"
+                              label="Ingredient"
+                              errors={props.errors[idx] && props.errors[idx].ingredientId ? props.errors[idx].ingredientId.join('. ') : ''}
+                           />
+                           <TextField
+                              className={clsx(classes.gutters, classes.formControl)}
+                              variant="outlined"
+                              label="Measurement"
+                              select
+                              value={ingr.measurementId}
+                              onChange={changeIngredientProp(idx, 'measurementId')}
+                           >
+                              <MenuItem value={0}>None</MenuItem>
+                              {
+                                 allIngredientMeasurements.map(ingrMeas => {
+                                    return (
+                                       <MenuItem key={ingrMeas.id} value={ingrMeas.id}>
+                                          {ingrMeas.description}
+                                       </MenuItem>
+                                    )
+                                 })
+                              }
+                           </TextField>
+                           <TextField
+                              variant="outlined"
+                              label="Amount"
+                              value={ingr.amount}
+                              type="number"
+                              onChange={changeIngredientProp(idx, 'amount')}
+                              className={classes.gutters}
+                              error={props.errors[idx] && props.errors[idx].amount ? true : false}
+                              helperText={props.errors[idx] && props.errors[idx].amount ? props.errors[idx].amount.join('. ') : ''}
+                              FormHelperTextProps={{ classes: { root: classes.helperText }}}
+                           />
+                           <ListItemIcon>
+                              <IconButton edge="end" onClick={() => handleChangeEditState(idx, false)}>
+                                 <DoneIcon />
+                              </IconButton>
+                           </ListItemIcon>
+                        </ListItem>
+                        :
+                        <ListItem key={idx} disableGutters>
+                           <ListItemIcon>
+                              <IconButton edge="end" onClick={() => deleteIngredient(idx)}>
+                                 <DeleteIcon />
+                              </IconButton>
+                           </ListItemIcon>
+                           <ListItemText primary={<Typography component="p">{`${ingr.amount} ${getMeasurementProp(ingr.measurementId, 'measurement')} ${getIngredientProp(ingr.ingredientId, 'name')}`}</Typography>} />
+                           <ListItemIcon>
+                              <IconButton edge="end" onClick={() => handleChangeEditState(idx, true)}>
+                                 <EditIcon />
+                              </IconButton>
+                           </ListItemIcon>
+                        </ListItem>
+                  }
                   </Fragment>
                )
             }
