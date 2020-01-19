@@ -157,7 +157,7 @@ export default function NewRecipeModal(props) {
                value={recipe.name}
                onChange={handleChangeRecipeProp('name')}
                error={validationErrors.name ? true : false}
-               helperText={validationErrors.name || ' '}
+               helperText={validationErrors.name || ''}
             />
             <TextField
                key={props.showModal ? 1 : 11}
@@ -171,7 +171,7 @@ export default function NewRecipeModal(props) {
                value={recipe.description}
                onChange={handleChangeRecipeProp('description')}
                error={validationErrors.description ? true : false}
-               helperText={validationErrors.description || ' '}
+               helperText={validationErrors.description || ''}
             />
             <TextField
                key={props.showModal ? 2 : 12}
@@ -182,7 +182,7 @@ export default function NewRecipeModal(props) {
                value={recipe.imageUrl}
                onChange={handleChangeRecipeProp('imageUrl')}
                error={validationErrors.imageUrl ? true : false}
-               helperText={validationErrors.imageUrl || ' '}
+               helperText={validationErrors.imageUrl || ''}
             />
             <Grid container spacing={2}>
                <Grid item xs={4}>
