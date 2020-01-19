@@ -108,7 +108,7 @@ export default function NewRecipeModal(props) {
       let directions = [...recipe.directions];
       setRecipe({
          ...recipe,
-         directions: directions.filter((d, i) => idx != i).map((dir, idx) => dir['order'] = idx)
+         directions: directions.filter((d, i) => idx != i).map((d, i) => { return { ...d, order: i }})
       });
    }
 

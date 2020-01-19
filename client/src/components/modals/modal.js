@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 const Modal = props => {
    const classes = useStyles();
    const handleBackgroundClick = (e) => {
-      if (e.target === e.currentTarget) props.onClose();
+      //if (e.target === e.currentTarget) props.onClose();
    };
 
    return (
