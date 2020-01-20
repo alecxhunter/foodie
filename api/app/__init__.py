@@ -20,7 +20,7 @@ def create_app(config_name):
    app.config.from_pyfile('config.py')
    db.init_app(app)
    cors = CORS(app)
-   migrate = Migrate(app, db)
+   migrate = Migrate(app, db, compare_type=True)
 
    from app import models
 

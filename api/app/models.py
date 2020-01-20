@@ -64,7 +64,7 @@ class RecipeIngredient(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), nullable=False)
-   amount = db.Column(db.Numeric(scale=2), nullable=False)
+   amount = db.Column(db.DECIMAL(precision=5, scale=2), nullable=False)
    measurement_id = db.Column(db.Integer, db.ForeignKey('ingredient_measurements.id'))
 
    def __repr__(self):
