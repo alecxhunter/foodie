@@ -57,7 +57,7 @@ export default function RecipeCard(props) {
             <div className={classes.cardHeaderDetails}>
                <Typography variant="body1">Prep Time: {props.recipe.prepTime} min</Typography>
                <Typography variant="body1" align={'center'}>Cook Time: {props.recipe.cookTime} min</Typography>
-               <Typography variant="body1" align={'right'}>Servings: {props.recipe.servings}</Typography>
+               <Typography variant="body1" align={'right'}>{props.recipe.servings} Servings</Typography>
             </div>
          </div>
          <CardContent>

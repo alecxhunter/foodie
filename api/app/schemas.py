@@ -28,7 +28,7 @@ class RecipeDirectionSchema(Schema):
 class RecipeIngredientSchema(Schema):
    id = fields.Int(dump_only=True)
    recipe_id = fields.Int(data_key='recipeId')
-   amount = fields.Int(
+   amount = fields.Decimal(
       required=True
       , validate=validate.Range(min=0, min_inclusive=False, error='Must be greater than 0')
    )
