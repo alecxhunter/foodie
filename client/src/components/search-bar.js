@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { TextField } from '@material-ui/core';
@@ -40,6 +40,12 @@ function SearchBar(props) {
 
    const [query, setQuery] = useState('');
    const [showSearchResults, setShowSearchResults] = useState(false);
+
+   useEffect(() => {
+      // Reset query if selected value does not exist
+      if (!props.data.find(d => d[props.valueProperty] === props.selectedValue))
+         setQuery('');
+   }, [props.selectedValue]);
 
    const handleChangeQuery = e => {
       const obj = props.data.find(el => el[props.searchProperty].toLowerCase() === e.target.value.toLowerCase());
