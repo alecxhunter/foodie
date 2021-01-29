@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { AppBar, Toolbar, CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 
 import Recipes from './containers/recipes';
+import Planner from './containers/planner';
 import theme from './theme';
 import NavBar from './components/navbar';
 
@@ -19,15 +21,19 @@ function App() {
    return (
       <MuiThemeProvider theme={theme}>
          <CssBaseline />
-         <AppBar color="primary" position="fixed">
-            <Toolbar>
-               <NavBar />
-            </Toolbar>
-         </AppBar>
-         <Toolbar />
-         <main className={classes.margin}>
-            <Recipes />
-         </main>
+         <BrowserRouter>
+            <Fragment>
+               <AppBar color="primary" position="fixed">
+                  <NavBar />
+               </AppBar>
+               <Toolbar />
+               <main className={classes.margin}>
+                  <Route exact path="/" component={Planner} />
+                  <Route path="/recipes" component={Recipes} />
+                  <Route path="/planner" component={Planner} />
+               </main>
+            </Fragment>
+         </BrowserRouter>
       </MuiThemeProvider>
    )
 }
