@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'uppercase'
   },
   grid: {
-    
+    position: 'relative',
   },
   tile: {
     borderRight: '1px solid #777',
@@ -26,11 +26,12 @@ const useStyles = makeStyles(theme => ({
     '&:nth-child(-n+7)': {
       borderTop: '1px solid #777'
     },
-    position: 'relative',
+    background: '#f1f0eb',
     cursor: 'pointer',
     '&:hover': {
       background: '#ddd'
-    }
+    },
+    transition: 'all 1s ease'
   },
   notInMonth: {
     '&:nth-child(odd)': {
@@ -51,32 +52,36 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: theme.spacing(1),
     left: theme.spacing(1)
+  },
+  selectedTile: {
+    width: '100% !important',
+    height: '100% !important',
+    position: 'absolute',
+    zIndex: 1000
   }
 }));
 
 const getVisbleDaysForDate = date => {
   const arr = [];
-  const startDt = new Date(date);
-  // Back up to first day of the month
-  startDt.setDate(1);
+
+  // Get first day of the month
+  const startDt = new Date(date.getFullYear(), date.getMonth(), 1)
   // Back up to first Sunday
   startDt.setDate(-(startDt.getDay() - 1));
 
-  const endDt = new Date(date);
-  // Fast-forward to next month
-  endDt.setMonth(endDt.getMonth()+1);
+  // Get first day of next month
+  const endDt = new Date(date.getFullYear(), date.getMonth() + 1, 1);
   // Back up to last day of last month
   endDt.setDate(0);
   // Move to last Saturday
-
-  console.log('start: ', startDt);
-  console.log('end: ', endDt);
+  endDt.setDate(endDt.getDate() + (7 - endDt.getDay()))
 
   const numDays = (endDt - startDt) / (1000 * 60 * 60 * 24);
-  console.log('diff days', numDays);
 
   for (let i = 0; i < numDays; i++) {
-    arr.push(new Date(startDt));
+    arr.push({
+      date: new Date(startDt)
+    });
     startDt.setDate(startDt.getDate() + 1);
   }
 
@@ -88,6 +93,17 @@ export default function Planner() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
   const [visibleDays, setVisibleDays] = useState(getVisbleDaysForDate(new Date()));
+
+  const handleClickDay = day => {
+    console.log('clicked: ', day);
+    setVisibleDays(visibleDays.map(d => {
+      if (d == day) {
+        return { ...d, ['selected']: true }
+      } else {
+        return d
+      }
+    }));
+  }
 
   return (
     <Fragment>
@@ -101,9 +117,12 @@ export default function Planner() {
               <GridListTile
                 key={idx}
                 className={clsx(classes.tile, {
-                  [classes.notInMonth]: day.getMonth() != month
-              })}>
-                <Typography variant="h1" className={classes.dayIndicator}>{day.getDate()}</Typography>
+                  [classes.notInMonth]: day.date.getMonth() != month,
+                  [classes.selectedTile]: day.selected
+                })}
+                onClick={() => handleClickDay(day)}
+              >
+                <Typography variant="h1" className={classes.dayIndicator}>{day.date.getDate()}</Typography>
               </GridListTile>
               
             )

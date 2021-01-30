@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Modal from '../modal';
 import EditableList from '../../editable-list';
-import { AppBar, Tab, Tabs, Box, TextField, Grid, FormHelperText, Typography } from '@material-ui/core';
+import { AppBar, Tab, Tabs, Box, TextField, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IngredientsTab from './ingredients-tab';
 
