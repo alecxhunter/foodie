@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       background: '#ddd'
     },
-    transition: 'all 1s ease'
+    top: '50%',
+    left: '50%'
   },
   notInMonth: {
     '&:nth-child(odd)': {
@@ -57,7 +58,11 @@ const useStyles = makeStyles(theme => ({
     width: '100% !important',
     height: '100% !important',
     position: 'absolute',
-    zIndex: 1000
+    zIndex: 1000,
+    border: '1px solid #777',
+    top: 0,
+    left: 0,
+    zIndex: 100
   }
 }));
 
@@ -80,7 +85,8 @@ const getVisbleDaysForDate = date => {
 
   for (let i = 0; i < numDays; i++) {
     arr.push({
-      date: new Date(startDt)
+      date: new Date(startDt),
+      selected: false
     });
     startDt.setDate(startDt.getDate() + 1);
   }
@@ -98,7 +104,7 @@ export default function Planner() {
     console.log('clicked: ', day);
     setVisibleDays(visibleDays.map(d => {
       if (d == day) {
-        return { ...d, ['selected']: true }
+        return { ...d, ['selected']: !day.selected }
       } else {
         return d
       }
