@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import clsx from 'clsx';
-import { GridList, GridListTile, Typography, ButtonBase } from '@material-ui/core';
+import { GridList, GridListTile, Typography, ButtonBase, Box } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
     left: '50%'
   },
   notInMonth: {
+    cursor: 'default',
     '&:nth-child(odd)': {
       backgroundImage: 'linear-gradient(45deg, #4c4c4d 25%, #000000 25%, #000000 50%, #4c4c4d 50%, #4c4c4d 75%, #000000 75%, #000000 100%)',
       backgroundSize: '40px 40px',
@@ -94,14 +95,17 @@ const getVisbleDaysForDate = date => {
   return arr;
 };
 
-export default function Planner() {
+function Planner() {
   const classes = useStyles();
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
   const [visibleDays, setVisibleDays] = useState(getVisbleDaysForDate(new Date()));
+  const [plannedMeals, setPlannedMeals] = useState([]);
 
   const handleClickDay = day => {
-    console.log('clicked: ', day);
+    // Check if this date is in the current month
+    if (day.date.getMonth() != month) return;
+
     setVisibleDays(visibleDays.map(d => {
       if (d == day) {
         return { ...d, ['selected']: !day.selected }
@@ -109,6 +113,28 @@ export default function Planner() {
         return d
       }
     }));
+  }
+
+  const getFocusedView = day => {
+    // Check if any meals are planned for this day
+    if (plannedMeals.find(m => m.date == day.date)) {
+
+    } else {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
+        >
+          <Typography variant="h2" align="center">No meals planned! Click to add...</Typography>
+        </Box>
+      )
+    }
+  }
+
+  const getUnfocusedView = day => {
+    return '';
   }
 
   return (
@@ -129,6 +155,7 @@ export default function Planner() {
                 onClick={() => handleClickDay(day)}
               >
                 <Typography variant="h1" className={classes.dayIndicator}>{day.date.getDate()}</Typography>
+                { day.selected ? getFocusedView() : getUnfocusedView() }
               </GridListTile>
               
             )
@@ -138,3 +165,5 @@ export default function Planner() {
     </Fragment>
   )
 }
+
+export default Planner;
