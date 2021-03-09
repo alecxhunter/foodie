@@ -1,6 +1,6 @@
-import React, { useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import clsx from 'clsx';
-import { GridList, GridListTile, Typography, ButtonBase, Box } from '@material-ui/core';
+import { GridList, GridListTile, Typography, ButtonBase, Box, TextField, MenuItem } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -51,9 +51,10 @@ const useStyles = makeStyles(theme => ({
     color: '#inherit',
     fontSize: '3em',
     fontWeight: 'bold',
-    position: 'absolute',
+    padding: theme.spacing(1)
+    /* position: 'absolute',
     top: theme.spacing(1),
-    left: theme.spacing(1)
+    left: theme.spacing(1) */
   },
   selectedTile: {
     width: '100% !important',
@@ -64,6 +65,9 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     left: 0,
     zIndex: 100
+  },
+  input: {
+    padding: theme.spacing(1)
   }
 }));
 
@@ -101,6 +105,23 @@ function Planner() {
   const [month, setMonth] = useState(new Date().getMonth());
   const [visibleDays, setVisibleDays] = useState(getVisbleDaysForDate(new Date()));
   const [plannedMeals, setPlannedMeals] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/recipes')
+       .then(res => {
+          return res.json();
+       }).then(data => {
+          console.log('recipes loaded')
+          console.log(data)
+          setRecipes(data);
+       });
+  }, []);
+
+  const handleAddNewPlannedMeal = day => e => {
+    e.stopPropagation();
+    setPlannedMeals([...plannedMeals, {day: day, recipe: {}}]);
+  }
 
   const handleClickDay = day => {
     // Check if this date is in the current month
@@ -117,8 +138,39 @@ function Planner() {
 
   const getFocusedView = day => {
     // Check if any meals are planned for this day
-    if (plannedMeals.find(m => m.date == day.date)) {
-
+    const plannedMeal = plannedMeals.find(m => m.day == day.date);
+    if (plannedMeal) {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          height="100%"
+          onClick={e => e.stopPropagation()}
+        >
+          <Typography variant="h3" align="center" display="block">Select a recipe!</Typography>
+          <TextField
+            className={classes.input}
+            variant="outlined"
+            label="Recipe"
+            select
+            value={plannedMeal.recipe.id || 0}
+            fullWidth
+            onChange={() => 7}
+          >
+            <MenuItem value={0}>None</MenuItem>
+            {
+              recipes.map(recipe => {
+                return (
+                  <MenuItem key={recipe.id} value={recipe.id}>
+                    {recipe.name}
+                  </MenuItem>
+                )
+              })
+            }
+          </TextField>
+        </Box>
+      )
     } else {
       return (
         <Box
@@ -126,6 +178,7 @@ function Planner() {
           alignItems="center"
           justifyContent="center"
           height="100%"
+          onClick={handleAddNewPlannedMeal(day.date)}
         >
           <Typography variant="h2" align="center">No meals planned! Click to add...</Typography>
         </Box>
@@ -155,7 +208,7 @@ function Planner() {
                 onClick={() => handleClickDay(day)}
               >
                 <Typography variant="h1" className={classes.dayIndicator}>{day.date.getDate()}</Typography>
-                { day.selected ? getFocusedView() : getUnfocusedView() }
+                { day.selected ? getFocusedView(day) : getUnfocusedView(day) }
               </GridListTile>
               
             )
