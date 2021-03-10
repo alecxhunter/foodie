@@ -67,7 +67,11 @@ const useStyles = makeStyles(theme => ({
     zIndex: 100
   },
   input: {
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    '& .MuiInput-input': {
+      padding: theme.spacing(3),
+      textAlign: 'center'
+    }
   }
 }));
 
@@ -148,17 +152,15 @@ function Planner() {
           height="100%"
           onClick={e => e.stopPropagation()}
         >
-          <Typography variant="h3" align="center" display="block">Select a recipe!</Typography>
           <TextField
             className={classes.input}
-            variant="outlined"
-            label="Recipe"
+            variant="standard"
             select
             value={plannedMeal.recipe.id || 0}
             fullWidth
             onChange={() => 7}
           >
-            <MenuItem value={0}>None</MenuItem>
+            <MenuItem value={0}>- - - -</MenuItem>
             {
               recipes.map(recipe => {
                 return (
